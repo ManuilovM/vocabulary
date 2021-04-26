@@ -1,0 +1,13 @@
+
+
+.logo, 
+.pageTitle {
+ text-align: center;
+}
+.logo{
+    font-size:xx-large;
+    font-family: 'cloud sans';
+}
+.pageTitle{
+    font-size: larger;
+}
