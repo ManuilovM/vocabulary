@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { TrainingComponent } from './components/training/training.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     AppComponent,
     TopBarComponent,
     HomePageComponent,
+    TrainingComponent,
 
   ],
   imports: [
