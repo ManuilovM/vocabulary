@@ -1,16 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent implements OnInit {
+
   @Input() pageTitle: string ="";
 
-  constructor() { }
+  public pathname = window.location.pathname;
 
-  ngOnInit(): void {
+  isTrainingComponent():boolean{
+    return  this.pathname ==="/EnRu"||this.pathname=="/RuEn";
+  } 
+
+  constructor() {
+    
   }
 
+  ngOnInit(): void {
+    
+  }
+
+ 
+  
 }

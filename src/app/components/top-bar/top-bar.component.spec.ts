@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+
 import { TopBarComponent } from './top-bar.component';
 
 describe('TopBarComponent', () => {
@@ -29,6 +30,36 @@ describe('TopBarComponent', () => {
   it('should be pageTitle', () => {
     expect(component.pageTitle).toBeTruthy();
   });
+
+  it('Должна быть видна стрелка .arrow-back если pathname = "/EnRu"', ()=>{
+    component.pathname ="/EnRu";
+    fixture.detectChanges();
+    const arrow = fixture.debugElement.nativeElement.querySelector('.arrow-back');
+    expect(arrow).toBeTruthy();
+  })
+
+  it('Должна быть видна стрелка .arrow-back если pathname = "/RuEn"', ()=>{
+    component.pathname ="/RuEn";
+    fixture.detectChanges();
+    const arrow = fixture.debugElement.nativeElement.querySelector('.arrow-back');
+    expect(arrow).toBeTruthy();
+  })
+
+  it('Не должна быть видна стрелка .arrow-back если pathname  равно "/" ', ()=>{
+    component.pathname ="/";
+    fixture.detectChanges();
+    const arrow = fixture.debugElement.nativeElement.querySelector('.arrow-back');
+    expect(arrow).not.toBeTruthy();
+  })
+
+  it('Не должна быть видна стрелка .arrow-back если pathname  равно "/RandomRoute" ', ()=>{
+    component.pathname ="/RandomRote";
+    fixture.detectChanges();
+    const arrow = fixture.debugElement.nativeElement.querySelector('.arrow-back');
+    expect(arrow).not.toBeTruthy();
+  })
+
+
 
 
 });

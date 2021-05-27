@@ -2,6 +2,13 @@
 <header class="header app-top_header">
   <div class="logo header__logo ">Vocabulary</div>
   <hr>
-  <div class="pageTitle header__pageTitle">{{pageTitle}}</div>
+ 
+  <div class="pageTitle header__pageTitle"> 
+    <a *ngIf ="isTrainingComponent()" href="/">
+    <svg  class="arrow-back header__arrow-back " style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" />
+</svg> </a>
+{{pageTitle}}
+</div>
 </header>
 

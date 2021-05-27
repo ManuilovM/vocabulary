@@ -11,3 +11,11 @@
 .pageTitle{
     font-size: larger;
 }
+
+.arrow-back{
+    position: fixed;
+    left: 20%;
+    padding-right: 15%;
+    padding-left: 10%;
+    cursor: pointer;
+}
