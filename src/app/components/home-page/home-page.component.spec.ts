@@ -22,4 +22,8 @@ describe('HomePageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  it('should be curentPageTitle',()=>{
+    expect(component.currentPageTitle).toBeTruthy();
+  })
 });

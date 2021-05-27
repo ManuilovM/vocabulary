@@ -16,10 +16,19 @@ describe('TopBarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TopBarComponent);
     component = fixture.componentInstance;
+    
+    component.pageTitle="Страница";
+    
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should be pageTitle', () => {
+    expect(component.pageTitle).toBeTruthy();
+  });
+
+
 });
