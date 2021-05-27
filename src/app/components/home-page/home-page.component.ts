@@ -7,7 +7,7 @@ import { Component, OnInit, Output,  } from '@angular/core';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  @Output () currentPageTitle ="Главная";
+
 
   constructor() { }
 

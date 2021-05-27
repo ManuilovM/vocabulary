@@ -18,9 +18,6 @@ describe('TrainingComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TrainingComponent ],
-      providers: [{
-        provide: Router, useValue: fakeRouter
-      }]
     })
     .compileComponents();
   });
@@ -38,16 +35,5 @@ describe('TrainingComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should be currentPageTitle EnRu',()=>{
-    spyOnProperty(component.router,'url').and.returnValue("EnRu");
-    fixture.detectChanges();
-    expect(component.currentPageTitle).toEqual("Англо-русский режим");
-  })
 
-  xit('should be currentPageTitle RuEn',()=>{
-    
-    fixture.detectChanges();
-    expect(component.currentPageTitle).toEqual("Русско-английский режим");
-
-  })
 });

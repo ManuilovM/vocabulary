@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -8,12 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./training.component.css']
 })
 export class TrainingComponent implements OnInit {
-  @Output() currentPageTitle:string;
+ 
 
-  constructor(public router: Router) {    
-    let url=this.router.url;
-    if(url==="/EnRu") this.currentPageTitle = "Англо-русский режим";
-    if(url==="/RuEn") this.currentPageTitle= "Русско-английский режим";
+  constructor() {    
+
   }
 
   ngOnInit(): void {

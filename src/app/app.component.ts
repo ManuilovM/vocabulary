@@ -9,11 +9,5 @@ import { Component  } from '@angular/core';
 })
 export class AppComponent {
 
-  appPageTitle:string;
-
-
-  onActivate(component) {
-    this.appPageTitle =component.currentPageTitle;
-  }
 
 }

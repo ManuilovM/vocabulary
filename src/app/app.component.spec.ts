@@ -23,12 +23,6 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('shold be appPageTitle', ()=>{
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    app.appPageTitle = "Страница";
-    expect(app.appPageTitle).toBeTruthy();
-  })
 
 
 

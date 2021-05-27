@@ -8,13 +8,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
 
-  @Input() pageTitle: string ="";
+   
 
   public pathname = window.location.pathname;
+  pageTitle: string = this.getPageTitle();
 
   isTrainingComponent():boolean{
     return  this.pathname ==="/EnRu"||this.pathname=="/RuEn";
   } 
+
+  getPageTitle():string{
+    if(this.pathname==="/") return "Главная";
+    if(this.pathname==="/EnRu") return "Англо-русский режим";
+    if(this.pathname==="/RuEn") return "Русско-английский режим";
+  }
 
   constructor() {
     

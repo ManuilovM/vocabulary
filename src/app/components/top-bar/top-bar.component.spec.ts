@@ -59,7 +59,22 @@ describe('TopBarComponent', () => {
     expect(arrow).not.toBeTruthy();
   })
 
+  it('getPageTitle должна выдавать "Главная" при pathname ="/"',()=>{
+    component.pathname ="/";
+    expect(component.getPageTitle()).toEqual('Главная');
+  })
 
+  it('getPageTitle должна выдавать "Англо-русский режим" при pathname ="/EnRu" ',()=>{
+    component.pathname ="/EnRu";
+    fixture.detectChanges();
+    expect(component.getPageTitle()).toEqual('Англо-русский режим');
+  })
+
+  it('getPageTitle должна выдавать "Русско-английский режим" при pathname ="/RuEn" ',()=>{
+    component.pathname ="/RuEn";
+    fixture.detectChanges();
+    expect(component.getPageTitle()).toEqual('Русско-английский режим');
+  })
 
 
 });
