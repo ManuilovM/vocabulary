@@ -1,23 +1,24 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-
-
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { TrainingComponent } from './training.component';
+
+
 
 describe('TrainingComponent', () => {
   let component: TrainingComponent;
   let fixture: ComponentFixture<TrainingComponent>;
 
+
+
  
-  //const fakeRouter = jasmine.createSpyObj("Router", [], {url:"EnRu"}) 
-  const fakeRouter ={}
-  
   beforeEach(async () => {
+
     await TestBed.configureTestingModule({
+      imports:[ReactiveFormsModule],
       declarations: [ TrainingComponent ],
+
     })
     .compileComponents();
   });
@@ -35,5 +36,12 @@ describe('TrainingComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('Должено быть свойство word',()=>{
+    expect(component.word).toBeDefined();
+  })
+
+  it('Должено быть свойство wordFormControl',()=>{
+    expect(component.wordFormControl).toBeTruthy();
+  })
 
 });

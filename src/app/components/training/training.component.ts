@@ -1,4 +1,5 @@
 import { Component, OnInit, } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 
 
@@ -8,7 +9,15 @@ import { Component, OnInit, } from '@angular/core';
   styleUrls: ['./training.component.css']
 })
 export class TrainingComponent implements OnInit {
- 
+  
+  word:string ="Слово";
+
+  wordFormControl:FormControl=new FormControl('');
+
+  onAddWordButtonClick(){
+
+  }
+
 
   constructor() {    
 

@@ -31,57 +31,60 @@ describe('TopBarComponent', () => {
     expect(component.pageTitle).toBeTruthy();
   });
 
-/* ------------------------------- arrowBack ------------------------------- */
+  /* ------------------------------- arrowBack ------------------------------- */
 
-  it('Должна быть видна стрелка .arrowBack если pathName = "/EnRu"', ()=>{
-    component.pathName ="/EnRu";
-    fixture.detectChanges();
-    const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
-    expect(arrow).toBeTruthy();
+  describe('arrowBack',()=>{
+    it('Должна быть видна стрелка .arrowBack если pathName = "/EnRu"', ()=>{
+      component.pathName ="/EnRu";
+      fixture.detectChanges();
+      const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
+      expect(arrow).toBeTruthy();
+    });
+  
+    it('Должна быть видна стрелка .arrowBack если pathName = "/RuEn"', ()=>{
+      component.pathName ="/RuEn";
+      fixture.detectChanges();
+      const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
+      expect(arrow).toBeTruthy();
+    });
+  
+    it('Не должна быть видна стрелка .arrowBack если pathName  равно "/" ', ()=>{
+      component.pathName ="/";
+      fixture.detectChanges();
+      const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
+      expect(arrow).not.toBeTruthy();
+    });
+  
+    it('Не должна быть видна стрелка .arrowBack если pathName  равно "/randomRoute" ', ()=>{
+      component.pathName ="/randomRote";
+      fixture.detectChanges();
+      const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
+      expect(arrow).not.toBeTruthy();
+    });
+
   })
 
-  it('Должна быть видна стрелка .arrowBack если pathName = "/RuEn"', ()=>{
-    component.pathName ="/RuEn";
-    fixture.detectChanges();
-    const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
-    expect(arrow).toBeTruthy();
-  })
-
-  it('Не должна быть видна стрелка .arrowBack если pathName  равно "/" ', ()=>{
-    component.pathName ="/";
-    fixture.detectChanges();
-    const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
-    expect(arrow).not.toBeTruthy();
-  })
-
-  it('Не должна быть видна стрелка .arrowBack если pathName  равно "/randomRoute" ', ()=>{
-    component.pathName ="/randomRote";
-    fixture.detectChanges();
-    const arrow = fixture.debugElement.nativeElement.querySelector('.arrowBack');
-    expect(arrow).not.toBeTruthy();
-  })
 
 /* -------------------------------- pathName -------------------------------- */
 
-
+describe('pathName',()=>{
   it('getPageTitle должна выдавать "Главная" при pathName ="/"',()=>{
     component.pathName ="/";
     expect(component.getPageTitle()).toEqual('Главная');
-  })
+  });
 
   it('getPageTitle должна выдавать "Англо-русский режим" при pathName ="/EnRu" ',()=>{
     component.pathName ="/EnRu";
     fixture.detectChanges();
     expect(component.getPageTitle()).toEqual('Англо-русский режим');
-  })
+  });
 
   it('getPageTitle должна выдавать "Русско-английский режим" при pathName ="/RuEn" ',()=>{
     component.pathName ="/RuEn";
     fixture.detectChanges();
     expect(component.getPageTitle()).toEqual('Русско-английский режим');
-  })
-
-  
+  });
+})
 
 
 });
