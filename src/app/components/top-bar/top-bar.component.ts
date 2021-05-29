@@ -9,7 +9,7 @@ export class TopBarComponent implements OnInit {
   pathName: string = window.location.pathname;
   pageTitle: string = this.getPageTitle();
 
-  isTrainingComponent(): boolean {
+  isTrainingComponentOpen(): boolean {
     return this.pathName === "/EnRu" || this.pathName == "/RuEn";
   }
 

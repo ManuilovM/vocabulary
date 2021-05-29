@@ -31,7 +31,7 @@ describe("TopBarComponent", () => {
 
   /* ------------------------------- arrowBack ------------------------------- */
 
-  describe("arrowBack", () => {
+  describe(".arrowBack, ", () => {
     it('Должна быть видна стрелка .arrowBack если pathName = "/EnRu"', () => {
       component.pathName = "/EnRu";
       fixture.detectChanges();
