@@ -1,21 +1,21 @@
-
-
-.logo, 
+.logo,
 .pageTitle {
- text-align: center;
-}
-.logo{
-    font-size:xx-large;
-    font-family: 'cloud sans';
-}
-.pageTitle{
-    font-size: larger;
+  text-align: center;
 }
 
-.arrowBack{
-    position: fixed;
-    left: 20%;
-    padding-right: 15%;
-    padding-left: 10%;
-    cursor: pointer;
+.logo {
+  font-size: xx-large;
+  font-family: "cloud sans";
+}
+
+.pageTitle {
+  font-size: larger;
+}
+
+.arrowBack {
+  position: fixed;
+  left: 20%;
+  padding-right: 15%;
+  padding-left: 10%;
+  cursor: pointer;
 }

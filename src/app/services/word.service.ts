@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class WordService {
+  constructor() {}
 
-  constructor() { }
+  isUnique(word: string): boolean {
+    return;
+  }
 }

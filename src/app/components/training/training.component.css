@@ -7,14 +7,17 @@
     font-size: larger;
     margin-bottom: 20px;
 }
+
 .form__addWordForm{
     align-items: center;
     justify-content: center;
     display: flex;
 }
+
 .el__addWordForm{
     margin: 10px;
 }
+
 .input{
     font-size: larger;
     width: 350px;
@@ -29,6 +32,7 @@
 .input:focus{
     box-shadow: 0px 0px 1px 1px rgba(153, 75, 226, 1 );
 }
+
 .button{
     border: none;
     background-color: rgb(153, 75, 226); 
@@ -38,6 +42,22 @@
     cursor: pointer;
     outline: none;
 }
+
 .button:focus{
     box-shadow: 0px 0px 1px 1px rgba(160, 80, 226, 1 );
+}
+
+.alertMessage{
+    margin: 10%;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: rgba(38, 37, 82, 0.041);
+    width: 80%;
+    line-height: 50px;
+    position: absolute;
+    bottom: 50px;
+    text-align: center;
+    font-size: large;
+    border-radius: 5px;
+    color: red;
 }
