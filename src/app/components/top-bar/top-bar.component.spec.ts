@@ -29,41 +29,41 @@ describe("TopBarComponent", () => {
     expect(component.pageTitle).toBeTruthy();
   });
 
-  /* ------------------------------- arrowBack ------------------------------- */
+  /* ------------------------------- arrowLinkBack ------------------------------- */
 
-  describe(".arrowBack, ", () => {
-    it('Должна быть видна стрелка .arrowBack если pathName = "/EnRu"', () => {
+  describe(".arrowLinkBack, ", () => {
+    it('Должна быть видна стрелка .arrowLinkBack если pathName = "/EnRu"', () => {
       component.pathName = "/EnRu";
       fixture.detectChanges();
       const arrow = fixture.debugElement.nativeElement.querySelector(
-        ".arrowBack"
+        ".arrowLinkBack"
       );
       expect(arrow).toBeTruthy();
     });
 
-    it('Должна быть видна стрелка .arrowBack если pathName = "/RuEn"', () => {
+    it('Должна быть видна стрелка .arrowLinkBack если pathName = "/RuEn"', () => {
       component.pathName = "/RuEn";
       fixture.detectChanges();
       const arrow = fixture.debugElement.nativeElement.querySelector(
-        ".arrowBack"
+        ".arrowLinkBack"
       );
       expect(arrow).toBeTruthy();
     });
 
-    it('Не должна быть видна стрелка .arrowBack если pathName  равно "/" ', () => {
+    it('Не должна быть видна стрелка .arrowLinkBack если pathName  равно "/" ', () => {
       component.pathName = "/";
       fixture.detectChanges();
       const arrow = fixture.debugElement.nativeElement.querySelector(
-        ".arrowBack"
+        ".arrowLinkBack"
       );
       expect(arrow).not.toBeTruthy();
     });
 
-    it('Не должна быть видна стрелка .arrowBack если pathName  равно "/randomRoute" ', () => {
+    it('Не должна быть видна стрелка .arrowLinkBack если pathName  равно "/randomRoute" ', () => {
       component.pathName = "/randomRote";
       fixture.detectChanges();
       const arrow = fixture.debugElement.nativeElement.querySelector(
-        ".arrowBack"
+        ".arrowLinkBack"
       );
       expect(arrow).not.toBeTruthy();
     });
