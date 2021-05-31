@@ -10,41 +10,46 @@ import { WordService } from "src/app/services/word.service";
   styleUrls: ["./training.component.css"],
 })
 export class TrainingComponent implements OnInit {
-  message: string = "Вы должны заполнить поле!";
+  message: string ="";
 
-  word: string = "Слово";
+  word: string = this.wordService.getWord();
 
   wordFormControl: FormControl = new FormControl("");
 
-  /*
+  
   onAddWordButtonClick(){
+  
     if(!this.wordFormControl.value){
-      this.openAlertMessage();
-      setTimeout(this.closeAlertMessag,2000);
-      return;
-    }
-    if(!this.ws.isUnique(wordStr)){
-      this.openAlertMessage("");
-      setTimeout(this.closeAlertMessag,2000);
+      this.showAlertMessage("Введите слово!");
       return;
     }
 
     let wordStr:string = this.wordFormControl.value;
     let wordObj:Word = {name: wordStr, cheked: 0}; 
-    this.ws.addWordStrToWordStorage();
-    th
-    th
-  }*/
 
-  openAlertMessage(msg: string) {
+    if(!this.wordService.isUnique(wordStr)){
+      this.showAlertMessage("Это слово уже добавлено!");
+      return;
+    }
+
+    this.wordService.addWordStrToWordStorage(wordStr);
+    this.wordService.addWordObjToCurentList(wordObj);
+    this.word = this.wordService.getWord()
+    return;
+  }
+
+
+
+  showAlertMessage(msg: string) {
     this.message = msg;
+    setTimeout(this.closeAlertMessage, 2000, this);
   }
 
-  closeAlertMessage(){
-    this.message ="";
+  closeAlertMessage(component){
+    component.message= "";
   }
 
-  constructor(public ws: WordService) {}
+  constructor(public wordService: WordService) {}
 
   ngOnInit(): void {}
 }

@@ -11,7 +11,7 @@
   <h3 class="question">Добавте новые слова в очередь, чтобы позже их поворить посредством опроса выше</h3>
   <div class="form__addWordForm">
     <input type="text" class="input el__addWordForm" [formControl]="wordFormControl">
-    <button class="button el__addWordForm" >Добавить</button>
+    <button class="button el__addWordForm" (click)="onAddWordButtonClick()">Добавить</button>
   </div>
 </div>
 
