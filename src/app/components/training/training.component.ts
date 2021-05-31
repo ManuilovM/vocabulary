@@ -19,12 +19,14 @@ export class TrainingComponent implements OnInit {
   /*
   onAddWordButtonClick(){
     if(!this.wordFormControl.value){
-      this.showAlertMessage();
-      return
+      this.openAlertMessage();
+      setTimeout(this.closeAlertMessag,2000);
+      return;
     }
     if(!this.ws.isUnique(wordStr)){
-      this.showAlertMessage();
-      return
+      this.openAlertMessage("");
+      setTimeout(this.closeAlertMessag,2000);
+      return;
     }
 
     let wordStr:string = this.wordFormControl.value;
@@ -34,11 +36,12 @@ export class TrainingComponent implements OnInit {
     th
   }*/
 
-  showAlertMessage(msg: string) {
+  openAlertMessage(msg: string) {
     this.message = msg;
-    setTimeout(()=>{
-      this.message=""
-    }, 2000);
+  }
+
+  closeAlertMessage(){
+    this.message ="";
   }
 
   constructor(public ws: WordService) {}

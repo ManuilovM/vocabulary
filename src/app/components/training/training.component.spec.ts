@@ -7,10 +7,12 @@ describe("TrainingComponent", () => {
   let component: TrainingComponent;
   let fixture: ComponentFixture<TrainingComponent>;
 
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
       declarations: [TrainingComponent],
+
     }).compileComponents();
   });
 
@@ -38,4 +40,42 @@ describe("TrainingComponent", () => {
     component.message = "Сообщение";
     expect(component.message).toBeTruthy();
   });
+
+  describe("openAlertMessage(msg)",()=>{
+    it("Должна менять свойство message на msg из аргумента",()=>{
+      component.message="";
+      fixture.detectChanges();
+      component.openAlertMessage("Сообщение");
+      expect(component.message).toEqual("Сообщение");
+    })
+  })
+
+  describe("closeAlertMessage()", ()=>{
+    it("Должна присваевать свойству message пустую строку",()=>{
+      component.message="Сообщение1";
+      fixture.detectChanges();
+      component.closeAlertMessage();
+      expect(component.message).toEqual("")
+    })
+  })
+
+  describe(".alertMessage *ngIf='message'",()=>{
+    it("При свойстве message = 'Проблема' должен быть виден элемент .alertMessage",()=>{
+      component.message ='Проблема';
+      fixture.detectChanges();
+      const alertMessage = fixture.debugElement.nativeElement.querySelector(
+        ".alertMessage"
+      );
+      expect(alertMessage).toBeTruthy();
+    })
+
+    it("При свойстве message = '' НЕ должен быть виден элемент .alertMessage",()=>{
+      component.message ='';
+      fixture.detectChanges();
+      const alertMessage = fixture.debugElement.nativeElement.querySelector(
+        ".alertMessage"
+      );
+      expect(alertMessage).toBeFalsy();
+    })
+  })
 });
