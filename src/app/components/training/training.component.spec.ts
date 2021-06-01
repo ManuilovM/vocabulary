@@ -95,9 +95,9 @@ describe("TrainingComponent", () => {
   /* --------------------------- onAddWordButtonClick() --------------------------- */
 
   describe("onAddWordButtonClick",()=>{
-    it("При клике на .button должна вызваться функция onAddButtonClick",()=>{
+    it("При клике на .addWorButton должна вызваться функция onAddButtonClick",()=>{
       spyOn(component, "onAddWordButtonClick").and.callFake(()=>{});;
-      let button = fixture.debugElement.nativeElement.querySelector('.button');
+      let button = fixture.debugElement.nativeElement.querySelector('.addWordButton');
       button.click();
       expect(component.onAddWordButtonClick).toHaveBeenCalled();
     })
