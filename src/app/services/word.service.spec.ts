@@ -35,6 +35,46 @@ describe("WordService", () => {
       expect(service.isUnique("слово")).toEqual(false);
     })
   })
+
+  describe("addWordStrToWordStorage(wordStr)",()=>{
+    beforeEach(()=>{
+      localStorage.clear();
+    })
+
+    describe("При отсутсвии localStorage.wordStorage до вызова функции", ()=>{
+      it("Должна добывить слово из аргумента в localStorage.wordStorage",()=>{
+        service.addWordStrToWordStorage("слово");
+        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
+        expect(wordStorage.indexOf("слово")!==-1).toEqual(true);
+      })
+
+      it("Количество елементов должно увеличится на 1", ()=>{
+        service.addWordStrToWordStorage("слово");
+        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
+        expect(wordStorage.length).toEqual(1);
+      })
+    })
+
+    describe("При существовании некого списка в localStorage.wordStorage до вызова функции", ()=>{
+      beforeEach(()=>{
+        let wordStorageInJSON:string = JSON.stringify(["Существующий", "список", "слов"]);
+        localStorage.setItem("wordStorage", wordStorageInJSON);
+      })
+
+      it("Должна добывить слово из аргумента в localStorage.wordStorage",()=>{
+        service.addWordStrToWordStorage("слово");
+        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
+        expect(wordStorage.indexOf("слово")!==-1).toEqual(true);
+      })
+
+      it("Количество елементов должно увеличится на 1", ()=>{
+        service.addWordStrToWordStorage("слово");
+        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
+        expect(wordStorage.length).toEqual(4);
+      })
+    })
+
+  })
   
 
 });
