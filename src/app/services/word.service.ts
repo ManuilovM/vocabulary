@@ -7,8 +7,12 @@ export class WordService {
   constructor() {}
 
   isUnique(word: string): boolean {
-    console.log("realIsUnic");
-    return;
+    
+    let wordStorageInJSON :string= localStorage.getItem("wordStorage");
+    if(!wordStorageInJSON) return true;
+    let wordStorage: Array<string> = JSON.parse(wordStorageInJSON);
+    if(wordStorage.indexOf(word)===-1) return true;
+    else return false
   }
 
   addWordStrToWordStorage(wordStr){
