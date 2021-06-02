@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
+import { Word } from "src/app/classes/word-obj";
 import { WordService } from "src/app/services/word.service";
 
 import { TrainingComponent } from "./training.component";
@@ -9,6 +10,7 @@ describe("TrainingComponent", () => {
   let fixture: ComponentFixture<TrainingComponent>;
 
   const FakeWordServise = jasmine.createSpyObj("wordServise", ["getWord", "isUnique", "addWordStrToWordStorage", "addWordObjToCurentList", "getWord"]);
+  FakeWordServise.getWord.and.callFake(():Word=>{return {name: "словечко", checked: 0}});
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,10 +26,7 @@ describe("TrainingComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TrainingComponent);
     component = fixture.componentInstance;
-
-    //WordServiceSpy.getWord.and.callFake(()=>{});
-
-  
+    
     fixture.detectChanges();
   });
 
@@ -53,8 +52,6 @@ describe("TrainingComponent", () => {
   /* ------------------------------ AlertMessage ----------------------------- */
   
   describe("showAlertMessage(msg)",()=>{
-   
-
     it("Должна менять свойство message на msg из аргумента",()=>{
       component.message="";
       fixture.detectChanges();
@@ -73,6 +70,8 @@ describe("TrainingComponent", () => {
   })
 
   describe(".alertMessage *ngIf='message'",()=>{
+
+
     it("При свойстве message = 'Проблема' должен быть виден элемент .alertMessage",()=>{
       component.message ='Проблема';
       fixture.detectChanges();
@@ -95,6 +94,8 @@ describe("TrainingComponent", () => {
   /* --------------------------- onAddWordButtonClick() --------------------------- */
 
   describe("onAddWordButtonClick",()=>{
+
+
     it("При клике на .addWorButton должна вызваться функция onAddButtonClick",()=>{
       spyOn(component, "onAddWordButtonClick").and.callFake(()=>{});;
       let button = fixture.debugElement.nativeElement.querySelector('.addWordButton');

@@ -12,7 +12,9 @@ import { WordService } from "src/app/services/word.service";
 export class TrainingComponent implements OnInit {
   message: string ="";
 
-  word: string = this.wordService.getWord();
+  word: string = this.wordService.getWord().name;
+
+  wordObj: Word;
 
   wordFormControl: FormControl = new FormControl("");
 
@@ -25,7 +27,7 @@ export class TrainingComponent implements OnInit {
     }
 
     let wordStr:string = this.wordFormControl.value;
-    let wordObj:Word = {name: wordStr, cheked: 0}; 
+    let wordObj:Word = {name: wordStr, checked: 0}; 
 
     if(!this.wordService.isUnique(wordStr)){
       this.showAlertMessage("Это слово уже добавлено!");
@@ -34,7 +36,8 @@ export class TrainingComponent implements OnInit {
 
     this.wordService.addWordStrToWordStorage(wordStr);
     this.wordService.addWordObjToCurentList(wordObj);
-    this.word = this.wordService.getWord()
+    this.word = this.wordService.getWord().name;
+    this.wordObj = this.wordService.getWord();
     return;
   }
 

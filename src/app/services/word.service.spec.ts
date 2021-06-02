@@ -1,4 +1,5 @@
 import { TestBed } from "@angular/core/testing";
+import { Word } from "../classes/word-obj";
 
 import { WordService } from "./word.service";
 
@@ -37,11 +38,11 @@ describe("WordService", () => {
   })
 
   describe("addWordStrToWordStorage(wordStr)",()=>{
-    beforeEach(()=>{
-      localStorage.clear();
-    })
-
     describe("При отсутсвии localStorage.wordStorage до вызова функции", ()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+      })
+
       it("Должна добывить слово из аргумента в localStorage.wordStorage",()=>{
         service.addWordStrToWordStorage("слово");
         let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
@@ -57,6 +58,7 @@ describe("WordService", () => {
 
     describe("При существовании некого списка в localStorage.wordStorage до вызова функции", ()=>{
       beforeEach(()=>{
+        localStorage.clear();
         let wordStorageInJSON:string = JSON.stringify(["Существующий", "список", "слов"]);
         localStorage.setItem("wordStorage", wordStorageInJSON);
       })
@@ -67,10 +69,58 @@ describe("WordService", () => {
         expect(wordStorage.indexOf("слово")!==-1).toEqual(true);
       })
 
-      it("Количество елементов должно увеличится на 1", ()=>{
+      it("Количество елементов должно увеличится на один", ()=>{
         service.addWordStrToWordStorage("слово");
         let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
         expect(wordStorage.length).toEqual(4);
+      })
+    })
+
+  })
+
+  describe("addWordStrToCurrentList(word)",()=>{
+    describe("При отсутсвии localStorage.currentList до вызова функции", ()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+      })
+
+      it("Должна добывить слово из аргумента в localStorage.currentList",()=>{
+        service.addWordObjToCurentList({name: "слово", checked:0});
+        let currentList :Array<Word> = JSON.parse(localStorage.getItem("currentList"));
+        let result= currentList.some((item)=>{
+          return item.name ==="слово"&& item.checked ===0;
+        })
+        expect(result).toEqual(true);
+      })
+
+      it("Количество елементов должно увеличится на один", ()=>{
+        service.addWordObjToCurentList({name: "слово", checked:0});
+        let currentList :Array<Word> = JSON.parse(localStorage.getItem("currentList"));
+        expect(currentList.length).toEqual(1);
+      })
+    })
+
+    describe("При существовании некого списка в localStorage.currentList до вызова функции", ()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+        let currentListInJSON:string = JSON.stringify([{name: "Случайный", checked:0}, {name: "список", checked:0}, {name: "слов", checked:0}]);
+        localStorage.setItem("currentList", currentListInJSON);
+      })
+
+      it("Должна добывить слово из аргумента в localStorage.currentList",()=>{
+        service.addWordObjToCurentList({name: "слово", checked:0});
+        let currentList:Array<Word> = JSON.parse(localStorage.getItem("currentList"));
+        let result= currentList.some((item)=>{
+          return item.name ==="слово"&& item.checked ===0;
+        })
+        expect(result).toEqual(true);
+      })
+      
+
+      it("Количество елементов должно увеличится на один", ()=>{
+        service.addWordObjToCurentList({name: "слово", checked:0});
+        let currentList :Array<Word> = JSON.parse(localStorage.getItem("currentList"));
+        expect(currentList.length).toEqual(4);
       })
     })
 
