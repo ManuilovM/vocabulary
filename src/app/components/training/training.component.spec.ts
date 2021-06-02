@@ -9,7 +9,7 @@ describe("TrainingComponent", () => {
   let component: TrainingComponent;
   let fixture: ComponentFixture<TrainingComponent>;
 
-  const FakeWordServise = jasmine.createSpyObj("wordServise", ["getWord", "isUnique", "addWordStrToWordStorage", "addWordToCurrentList", "getWord"]);
+  const FakeWordServise = jasmine.createSpyObj("wordServise", ["getWord", "isUnique", "addWordToMainList", "addWordToCurrentList", "getWord"]);
   FakeWordServise.getWord.and.callFake(():Word=>{return {name: "словечко", checked: 0}});
 
   beforeEach(async () => {
@@ -121,13 +121,13 @@ describe("TrainingComponent", () => {
         expect(FakeWordServise.isUnique).not.toHaveBeenCalled();
       })
 
-      it("Не должна вызываться функция wordService.addWordStrToWordStorage",()=>{
+      it("Не должна вызываться функция wordService.addWordToMainList",()=>{
         spyOn(component, "showAlertMessage").and.callFake((msg)=>{});
-        FakeWordServise.addWordStrToWordStorage.calls.reset();
+        FakeWordServise.addWordToMainList.calls.reset();
         component.wordFormControl.setValue("");
         fixture.detectChanges();
         component.onAddWordButtonClick();
-        expect(FakeWordServise.addWordStrToWordStorage).not.toHaveBeenCalled();
+        expect(FakeWordServise.addWordToMainList).not.toHaveBeenCalled();
       })
 
       it("Не должна вызываться функция wordService.addWordToCurrentList",()=>{
@@ -161,14 +161,14 @@ describe("TrainingComponent", () => {
         expect(component.showAlertMessage).toHaveBeenCalledWith('Это слово уже добавлено!');
       })
 
-      it("Не должна вызываться функция wordService.addWordStrToWordStorage",()=>{
+      it("Не должна вызываться функция wordService.addWordToMainList",()=>{
         spyOn(component, "showAlertMessage").and.callFake((msg)=>{});
-        FakeWordServise.addWordStrToWordStorage.calls.reset();
+        FakeWordServise.addWordToMainList.calls.reset();
         component.wordFormControl.setValue("word");
         FakeWordServise.isUnique.and.returnValue(false);
         fixture.detectChanges();
         component.onAddWordButtonClick();
-        expect(FakeWordServise.addWordStrToWordStorage).not.toHaveBeenCalled();
+        expect(FakeWordServise.addWordToMainList).not.toHaveBeenCalled();
       })
 
       it("Не должна вызываться функция wordService.addWordToCurrentList",()=>{
@@ -203,14 +203,14 @@ describe("TrainingComponent", () => {
         expect(component.showAlertMessage).not.toHaveBeenCalled();
       })
 
-      it("Должна вызываться функция wordService.addWordStrToWordStorage",()=>{
+      it("Должна вызываться функция wordService.addWordToMainList",()=>{
         spyOn(component, "showAlertMessage").and.callFake((msg)=>{});
-        FakeWordServise.addWordStrToWordStorage.calls.reset();
+        FakeWordServise.addWordToMainList.calls.reset();
         component.wordFormControl.setValue("word");
         FakeWordServise.isUnique.and.returnValue(true);
         fixture.detectChanges();
         component.onAddWordButtonClick();
-        expect(FakeWordServise.addWordStrToWordStorage).toHaveBeenCalled();
+        expect(FakeWordServise.addWordToMainList).toHaveBeenCalled();
       })
 
       it("Должна вызываться функция wordService.addWordToCurrentList",()=>{

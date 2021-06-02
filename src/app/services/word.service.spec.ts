@@ -24,55 +24,55 @@ describe("WordService", () => {
       expect(service.isUnique("cлово")).toEqual(true);
     })
 
-    it("При не существовании искомого слова в localStorage.wordStorage должна возввращать true", ()=>{
-      let wordStorageInJSON = JSON.stringify(["слово"]);
-      localStorage.setItem("wordStorage", wordStorageInJSON);
+    it("При не существовании искомого слова в localStorage.mainList должна возввращать true", ()=>{
+      let mainListInJSON = JSON.stringify(["слово"]);
+      localStorage.setItem("mainList", mainListInJSON);
       expect(service.isUnique("Уникальное слово")).toEqual(true);
     })
 
-    it("При существовании искомого слова в localStorage.wordStorage должна возввращать false", ()=>{
-      let wordStorageInJSON = JSON.stringify(["слово"]);
-      localStorage.setItem("wordStorage", wordStorageInJSON);
+    it("При существовании искомого слова в localStorage.mainList должна возввращать false", ()=>{
+      let mainListInJSON = JSON.stringify(["слово"]);
+      localStorage.setItem("mainList", mainListInJSON);
       expect(service.isUnique("слово")).toEqual(false);
     })
-  })
+  }) 
 
-  describe("addWordStrToWordStorage(wordStr)",()=>{
-    describe("При отсутсвии localStorage.wordStorage до вызова функции", ()=>{
+  describe("addWorToMainList(word)",()=>{
+    describe("При отсутсвии localStorage.mainList до вызова функции", ()=>{
       beforeEach(()=>{
         localStorage.clear();
       })
 
-      it("Должна добывить слово из аргумента в localStorage.wordStorage",()=>{
-        service.addWordStrToWordStorage("слово");
-        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
-        expect(wordStorage.indexOf("слово")!==-1).toEqual(true);
+      it("Должна добывить слово из аргумента в localStorage.mainList",()=>{
+        service.addWordToMainList("слово");
+        let mainList:Array<string> = JSON.parse(localStorage.getItem("mainList"));
+        expect(mainList.indexOf("слово")!==-1).toEqual(true);
       })
 
       it("Количество елементов должно увеличится на 1", ()=>{
-        service.addWordStrToWordStorage("слово");
-        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
-        expect(wordStorage.length).toEqual(1);
+        service.addWordToMainList("слово");
+        let mainList:Array<string> = JSON.parse(localStorage.getItem("mainList"));
+        expect(mainList.length).toEqual(1);
       })
     })
 
-    describe("При существовании некого списка в localStorage.wordStorage до вызова функции", ()=>{
+    describe("При существовании некого списка в localStorage.mainList до вызова функции", ()=>{
       beforeEach(()=>{
         localStorage.clear();
-        let wordStorageInJSON:string = JSON.stringify(["Существующий", "список", "слов"]);
-        localStorage.setItem("wordStorage", wordStorageInJSON);
+        let mainListInJSON:string = JSON.stringify(["Существующий", "список", "слов"]);
+        localStorage.setItem("mainList", mainListInJSON);
       })
 
-      it("Должна добывить слово из аргумента в localStorage.wordStorage",()=>{
-        service.addWordStrToWordStorage("слово");
-        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
-        expect(wordStorage.indexOf("слово")!==-1).toEqual(true);
+      it("Должна добывить слово из аргумента в localStorage.mainList",()=>{
+        service.addWordToMainList("слово");
+        let mainList:Array<string> = JSON.parse(localStorage.getItem("mainList"));
+        expect(mainList.indexOf("слово")!==-1).toEqual(true);
       })
 
       it("Количество елементов должно увеличится на один", ()=>{
-        service.addWordStrToWordStorage("слово");
-        let wordStorage:Array<string> = JSON.parse(localStorage.getItem("wordStorage"));
-        expect(wordStorage.length).toEqual(4);
+        service.addWordToMainList("слово");
+        let mainList:Array<string> = JSON.parse(localStorage.getItem("mainList"));
+        expect(mainList.length).toEqual(4);
       })
     })
 

@@ -8,23 +8,23 @@ export class WordService {
   constructor() {}
 
   isUnique(word: string): boolean {
-    let wordStorageInJSON: string = localStorage.getItem("wordStorage");
-    if (!wordStorageInJSON) return true;
-    let wordStorage: Array<string> = JSON.parse(wordStorageInJSON);
-    if (wordStorage.indexOf(word) === -1) return true;
+    let mainListFromLocalStorage: string = localStorage.getItem("mainList");
+    if (!mainListFromLocalStorage) return true;
+    let mainList: Array<string> = JSON.parse(mainListFromLocalStorage);
+    if (mainList.indexOf(word) === -1) return true;
     else return false;
   }
 
-  addWordStrToWordStorage(word: string) { // addWordToMainList
-    let wordStorage: Array<string> =[];
-    let wordStorageFromStorage: string = localStorage.getItem("wordStorage");
+  addWordToMainList(word: string) { // addWordToMainList
+    let mainList: Array<string> =[];
+    let mainListFromLocalStorage: string = localStorage.getItem("mainList");
 
-    if (wordStorageFromStorage) {
-      wordStorage=JSON.parse(wordStorageFromStorage);
+    if (mainListFromLocalStorage) {
+      mainList=JSON.parse(mainListFromLocalStorage);
     } 
 
-    wordStorage.push(word);
-    localStorage.setItem("wordStorage", JSON.stringify(wordStorage));
+    mainList.push(word);
+    localStorage.setItem("mainList", JSON.stringify(mainList));
   }
 
   addWordToCurrentList(word: Word) {

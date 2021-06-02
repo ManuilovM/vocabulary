@@ -34,7 +34,7 @@ export class TrainingComponent implements OnInit {
       return;
     }
 
-    this.wordService.addWordStrToWordStorage(wordStr);
+    this.wordService.addWordToMainList(wordStr);
     this.wordService.addWordToCurrentList(wordObj);
     this.word = this.wordService.getWord().name;
     this.wordObj = this.wordService.getWord();
