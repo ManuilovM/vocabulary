@@ -78,14 +78,14 @@ describe("WordService", () => {
 
   })
 
-  describe("addWordStrToCurrentList(word)",()=>{
+  describe("addWordToCurrentList(word)",()=>{
     describe("При отсутсвии localStorage.currentList до вызова функции", ()=>{
       beforeEach(()=>{
         localStorage.clear();
       })
 
       it("Должна добывить слово из аргумента в localStorage.currentList",()=>{
-        service.addWordObjToCurentList({name: "слово", checked:0});
+        service.addWordToCurrentList({name: "слово", checked:0});
         let currentList :Array<Word> = JSON.parse(localStorage.getItem("currentList"));
         let result= currentList.some((item)=>{
           return item.name ==="слово"&& item.checked ===0;
@@ -94,7 +94,7 @@ describe("WordService", () => {
       })
 
       it("Количество елементов должно увеличится на один", ()=>{
-        service.addWordObjToCurentList({name: "слово", checked:0});
+        service.addWordToCurrentList({name: "слово", checked:0});
         let currentList :Array<Word> = JSON.parse(localStorage.getItem("currentList"));
         expect(currentList.length).toEqual(1);
       })
@@ -108,7 +108,7 @@ describe("WordService", () => {
       })
 
       it("Должна добывить слово из аргумента в localStorage.currentList",()=>{
-        service.addWordObjToCurentList({name: "слово", checked:0});
+        service.addWordToCurrentList({name: "слово", checked:0});
         let currentList:Array<Word> = JSON.parse(localStorage.getItem("currentList"));
         let result= currentList.some((item)=>{
           return item.name ==="слово"&& item.checked ===0;
@@ -118,7 +118,7 @@ describe("WordService", () => {
       
 
       it("Количество елементов должно увеличится на один", ()=>{
-        service.addWordObjToCurentList({name: "слово", checked:0});
+        service.addWordToCurrentList({name: "слово", checked:0});
         let currentList :Array<Word> = JSON.parse(localStorage.getItem("currentList"));
         expect(currentList.length).toEqual(4);
       })

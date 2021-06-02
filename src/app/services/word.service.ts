@@ -15,7 +15,7 @@ export class WordService {
     else return false;
   }
 
-  addWordStrToWordStorage(word: string) {
+  addWordStrToWordStorage(word: string) { // addWordToMainList
     let wordStorage: Array<string> =[];
     let wordStorageFromStorage: string = localStorage.getItem("wordStorage");
 
@@ -27,7 +27,7 @@ export class WordService {
     localStorage.setItem("wordStorage", JSON.stringify(wordStorage));
   }
 
-  addWordObjToCurentList(word: Word) {
+  addWordToCurrentList(word: Word) {
     let currentList: Array<Word>=[];
     let currentListFromStorage: string = localStorage.getItem("currentList");
 
