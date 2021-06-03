@@ -52,9 +52,9 @@ describe("TrainingComponent", () => {
       expect(component.wordFormControl).toBeTruthy();
     });
 
-    it("Должно быть свойство message", () => {
-      component.message = "Сообщение";
-      expect(component.message).toBeTruthy();
+    it("Должно быть свойство alertMessage", () => {
+      component.alertMessage = "Сообщение";
+      expect(component.alertMessage).toBeTruthy();
     });
 
     it("Должно быть свойство wordInstance",()=>{
@@ -67,25 +67,25 @@ describe("TrainingComponent", () => {
   describe("alertMessage",()=>{
     describe("showAlertMessage(msg)", () => {
       it("Должна менять свойство message на msg из аргумента", () => {
-        component.message = "";
+        component.alertMessage = "";
         fixture.detectChanges();
         component.showAlertMessage("Сообщение1");
-        expect(component.message).toEqual("Сообщение1");
+        expect(component.alertMessage).toEqual("Сообщение1");
       });
     });
   
     describe("closeAlertMessage()", () => {
-      it("Должна присваевать свойству message пустую строку", () => {
-        component.message = "Сообщение2";
+      it("Должна присваевать свойству alertMessage пустую строку", () => {
+        component.alertMessage = "Сообщение2";
         fixture.detectChanges();
         component.closeAlertMessage(component);
-        expect(component.message).toEqual("");
+        expect(component.alertMessage).toEqual("");
       });
     });
   
     describe(".alertMessage *ngIf='message'", () => {
       it("При свойстве message = 'Проблема' должен быть виден элемент .alertMessage", () => {
-        component.message = "Проблема";
+        component.alertMessage = "Проблема";
         fixture.detectChanges();
         const alertMessage = fixture.debugElement.nativeElement.querySelector(
           ".alertMessage"
@@ -94,7 +94,7 @@ describe("TrainingComponent", () => {
       });
   
       it("При свойстве message = '' НЕ должен быть виден элемент .alertMessage", () => {
-        component.message = "";
+        component.alertMessage = "";
         fixture.detectChanges();
         const alertMessage = fixture.debugElement.nativeElement.querySelector(
           ".alertMessage"

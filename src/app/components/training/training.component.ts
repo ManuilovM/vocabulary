@@ -10,26 +10,24 @@ import { WordService } from "src/app/services/word.service";
   styleUrls: ["./training.component.css"],
 })
 export class TrainingComponent implements OnInit {
-  message: string ="";
+  alertMessage: string = "";
 
-  wordName: string ; 
+  wordName: string;
 
-  wordInstance: Word; 
+  wordInstance: Word;
 
   wordFormControl: FormControl = new FormControl("");
 
-  
-  onAddWordButtonClick(){
-  
-    if(!this.wordFormControl.value){
+  onAddWordButtonClick() {
+    if (!this.wordFormControl.value) {
       this.showAlertMessage("Введите слово!");
       return;
     }
 
-    let wordStr:string = this.wordFormControl.value;
-    let wordObj:Word = {name: wordStr, checked: 0}; 
+    let wordStr: string = this.wordFormControl.value;
+    let wordObj: Word = { name: wordStr, checked: 0 };
 
-    if(!this.wordService.isUnique(wordStr)){
+    if (!this.wordService.isUnique(wordStr)) {
       this.showAlertMessage("Это слово уже добавлено!");
       return;
     }
@@ -40,15 +38,20 @@ export class TrainingComponent implements OnInit {
     return;
   }
 
-   fillWordProperties (){
-     console.log("realFWP")
-    if ( (!this.wordService.isCurrentList()) && (!this.wordService.isCheckedList()) ) {
-      this.wordName = "В хранилище нет слов. Добавте слова чтобы начать тренировку";
+  fillWordProperties() {
+    console.log("realFWP");
+    if (
+      !this.wordService.isCurrentList() &&
+      !this.wordService.isCheckedList()
+    ) {
+      this.wordName =
+        "В хранилище нет слов. Добавте слова чтобы начать тренировку";
       return;
     }
-    let word:Word = this.wordService.getWord();
-    if(!word) {
-      this.wordName = "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые";
+    let word: Word = this.wordService.getWord();
+    if (!word) {
+      this.wordName =
+        "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые";
       return;
     }
     this.wordName = word.name;
@@ -56,12 +59,12 @@ export class TrainingComponent implements OnInit {
   }
 
   showAlertMessage(msg: string) {
-    this.message = msg;
+    this.alertMessage = msg;
     setTimeout(this.closeAlertMessage, 2000, this);
   }
 
-  closeAlertMessage(component){
-    component.message= "";
+  closeAlertMessage(component) {
+    component.alertMessage = "";
   }
 
   constructor(public wordService: WordService) {}
