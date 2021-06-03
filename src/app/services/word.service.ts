@@ -15,7 +15,7 @@ export class WordService {
     else return false;
   }
 
-  addWordToMainList(word: string) { // addWordToMainList
+  addWordToMainList(word: string) { 
     let mainList: Array<string> =[];
     let mainListFromLocalStorage: string = localStorage.getItem("mainList");
 
@@ -42,5 +42,13 @@ export class WordService {
   getWord(): Word {
     console.log("realagetWord");
     return { name: "словечко", checked: 0 };
+  }
+
+  isCurrentList(): boolean{
+    return( !!localStorage.getItem("currentList")&&!!localStorage.getItem("currentList").length)
+  }
+
+  isCheckedList():boolean{
+    return( !!localStorage.getItem("checkedList")&&!!localStorage.getItem("checkedList").length)
   }
 }
