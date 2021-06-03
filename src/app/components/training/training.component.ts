@@ -12,9 +12,9 @@ import { WordService } from "src/app/services/word.service";
 export class TrainingComponent implements OnInit {
   message: string ="";
 
-  word: string ; // wordName
+  wordName: string ; 
 
-  wordObj: Word; // wordInstance 
+  wordInstance: Word; 
 
   wordFormControl: FormControl = new FormControl("");
 
@@ -43,16 +43,16 @@ export class TrainingComponent implements OnInit {
    fillWordProperties (){
      console.log("realFWP")
     if ( (!this.wordService.isCurrentList()) && (!this.wordService.isCheckedList()) ) {
-      this.word = "В хранилище нет слов. Добавте слова чтобы начать тренировку";
+      this.wordName = "В хранилище нет слов. Добавте слова чтобы начать тренировку";
       return;
     }
     let word:Word = this.wordService.getWord();
     if(!word) {
-      this.word = "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые";
+      this.wordName = "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые";
       return;
     }
-    this.word = word.name;
-    this.wordObj = word;
+    this.wordName = word.name;
+    this.wordInstance = word;
   }
 
   showAlertMessage(msg: string) {

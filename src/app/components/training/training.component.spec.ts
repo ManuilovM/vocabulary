@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
-import { Word } from "src/app/classes/word-obj";
 import { WordService } from "src/app/services/word.service";
 
 import { TrainingComponent } from "./training.component";
@@ -44,9 +43,9 @@ describe("TrainingComponent", () => {
       expect(component).toBeTruthy();
     });
 
-    it("Должено быть свойство word", () => {
-      component.word = "слово";
-      expect(component.word).toBeTruthy();
+    it("Должено быть свойство wordName", () => {
+      component.wordName = "слово";
+      expect(component.wordName).toBeTruthy();
     });
 
     it("Должено быть свойство wordFormControl", () => {
@@ -57,47 +56,55 @@ describe("TrainingComponent", () => {
       component.message = "Сообщение";
       expect(component.message).toBeTruthy();
     });
+
+    it("Должно быть свойство wordInstance",()=>{
+      component.wordInstance= {name: "word1", checked:0}
+      expect(component.wordInstance).toBeTruthy();
+    })
   });
 
   /* ------------------------------ AlertMessage ----------------------------- */
-
-  describe("showAlertMessage(msg)", () => {
-    it("Должна менять свойство message на msg из аргумента", () => {
-      component.message = "";
-      fixture.detectChanges();
-      component.showAlertMessage("Сообщение1");
-      expect(component.message).toEqual("Сообщение1");
+  describe("alertMessage",()=>{
+    describe("showAlertMessage(msg)", () => {
+      it("Должна менять свойство message на msg из аргумента", () => {
+        component.message = "";
+        fixture.detectChanges();
+        component.showAlertMessage("Сообщение1");
+        expect(component.message).toEqual("Сообщение1");
+      });
     });
-  });
-
-  describe("closeAlertMessage()", () => {
-    it("Должна присваевать свойству message пустую строку", () => {
-      component.message = "Сообщение2";
-      fixture.detectChanges();
-      component.closeAlertMessage(component);
-      expect(component.message).toEqual("");
+  
+    describe("closeAlertMessage()", () => {
+      it("Должна присваевать свойству message пустую строку", () => {
+        component.message = "Сообщение2";
+        fixture.detectChanges();
+        component.closeAlertMessage(component);
+        expect(component.message).toEqual("");
+      });
     });
-  });
-
-  describe(".alertMessage *ngIf='message'", () => {
-    it("При свойстве message = 'Проблема' должен быть виден элемент .alertMessage", () => {
-      component.message = "Проблема";
-      fixture.detectChanges();
-      const alertMessage = fixture.debugElement.nativeElement.querySelector(
-        ".alertMessage"
-      );
-      expect(alertMessage).toBeTruthy();
+  
+    describe(".alertMessage *ngIf='message'", () => {
+      it("При свойстве message = 'Проблема' должен быть виден элемент .alertMessage", () => {
+        component.message = "Проблема";
+        fixture.detectChanges();
+        const alertMessage = fixture.debugElement.nativeElement.querySelector(
+          ".alertMessage"
+        );
+        expect(alertMessage).toBeTruthy();
+      });
+  
+      it("При свойстве message = '' НЕ должен быть виден элемент .alertMessage", () => {
+        component.message = "";
+        fixture.detectChanges();
+        const alertMessage = fixture.debugElement.nativeElement.querySelector(
+          ".alertMessage"
+        );
+        expect(alertMessage).toBeFalsy();
+      });
     });
 
-    it("При свойстве message = '' НЕ должен быть виден элемент .alertMessage", () => {
-      component.message = "";
-      fixture.detectChanges();
-      const alertMessage = fixture.debugElement.nativeElement.querySelector(
-        ".alertMessage"
-      );
-      expect(alertMessage).toBeFalsy();
-    });
-  });
+  })
+
 
   /* --------------------------- onAddWordButtonClick() --------------------------- */
 
@@ -247,42 +254,42 @@ describe("TrainingComponent", () => {
   /* ---------------------------- fillPropertyWord ---------------------------- */
 
   describe("fillWordProperty", () => {
-    it("При isCurrentList=false и isCheckedListfalse ДОЛЖНО быть Component.word = 'В хранилище нет слов...' ",
+    it("При isCurrentList=false и isCheckedListfalse ДОЛЖНО быть Component.wordName = 'В хранилище нет слов...' ",
       () => {
       FakeWordServise.isCurrentList.and.returnValue(false);
       FakeWordServise.isCheckedList.and.returnValue(false);
       fakeFillWordProperties.and.callThrough();
-      component.word = "";
+      component.wordName = "";
       fixture.detectChanges();
       component.fillWordProperties();
-      expect(component.word).toEqual(
+      expect(component.wordName).toEqual(
         "В хранилище нет слов. Добавте слова чтобы начать тренировку"
       );
     });
 
-    it( "При isCurrentList=true и getWord() = underfined ДОЛЖНО быть Component.word = 'Вы повторили все слова...' ", 
+    it( "При isCurrentList=true и getWord() = underfined ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
       FakeWordServise.isCurrentList.and.returnValue(true);
       FakeWordServise.getWord.and.returnValue(undefined);
       fakeFillWordProperties.and.callThrough();
-      component.word = "";
+      component.wordName = "";
       fixture.detectChanges();
       component.fillWordProperties();
-      expect(component.word).toEqual(
+      expect(component.wordName).toEqual(
         "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые"
       );
     });
 
 
-    it( "При isCurrentList=true и getWord() = {name: 'слово', checked: 0} ДОЛЖНО быть Component.word = 'Вы повторили все слова...' ", 
+    it( "При isCurrentList=true и getWord() = {name: 'слово', checked: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
       FakeWordServise.isCurrentList.and.returnValue(true);
       FakeWordServise.getWord.and.returnValue({name: 'слово', checked: 0});
       fakeFillWordProperties.and.callThrough();
-      component.word = "";
+      component.wordName = "";
       fixture.detectChanges();
       component.fillWordProperties();
-      expect(component.word).toEqual(
+      expect(component.wordName).toEqual(
         'слово'
       );
     });
