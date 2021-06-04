@@ -15,40 +15,65 @@ export class WordService {
     else return false;
   }
 
-  addWordToMainList(word: string) { 
-    let mainList: Array<string> =[];
+  addWordToMainList(word: string) {
+    let newMainList: Array<string> = [];
     let mainListFromLocalStorage: string = localStorage.getItem("mainList");
 
     if (mainListFromLocalStorage) {
-      mainList=JSON.parse(mainListFromLocalStorage);
-    } 
+      newMainList = JSON.parse(mainListFromLocalStorage);
+    }
 
-    mainList.push(word);
-    localStorage.setItem("mainList", JSON.stringify(mainList));
+    newMainList.push(word);
+    localStorage.setItem("mainList", JSON.stringify(newMainList));
   }
 
   addWordToCurrentList(word: Word) {
-    let currentList: Array<Word>=[];
-    let currentListFromStorage: string = localStorage.getItem("currentList");
+    let newCurrentList: Array<Word> = [];
+    let currentListFromLocalStorage: string = localStorage.getItem(
+      "currentList"
+    );
 
-    if (currentListFromStorage) {
-      currentList = JSON.parse(currentListFromStorage);
+    if (currentListFromLocalStorage) {
+      newCurrentList = JSON.parse(currentListFromLocalStorage);
     }
 
-    currentList.push(word);
-    localStorage.setItem("currentList", JSON.stringify(currentList));
+    newCurrentList.push(word);
+    localStorage.setItem("currentList", JSON.stringify(newCurrentList));
   }
 
   getWord(): Word {
-    console.log("realagetWord");
+    console.log("realGetWord");
     return { name: "словечко", checked: 0 };
   }
 
-  isCurrentList(): boolean{
-    return( !!localStorage.getItem("currentList")&&!!localStorage.getItem("currentList").length)
+  isCurrentList(): boolean {
+    return (
+      !!localStorage.getItem("currentList") &&
+      !!localStorage.getItem("currentList").length
+    );
   }
 
-  isCheckedList():boolean{
-    return( !!localStorage.getItem("checkedList")&&!!localStorage.getItem("checkedList").length)
+  isCheckedList(): boolean {
+    return (
+      !!localStorage.getItem("checkedList") &&
+      !!localStorage.getItem("checkedList").length
+    );
   }
+
+  takeWordsFromCheckedList(): Array<Word>{
+    let takenWords: Array<Word>=[];
+    let checkedList: Array<Word>;
+    if(!localStorage.getItem("checkedList")) return;
+    checkedList = JSON.parse(localStorage.getItem("checkedList"));
+    if(checkedList.length==0) return;
+    let todayStr: string = new Date().toDateString();
+
+    checkedList = checkedList.filter((item)=>{
+      let isTodayChecked: Boolean = item.lastCheck == todayStr;
+      if(!isTodayChecked) takenWords.push(item);
+      return isTodayChecked;
+    })
+    localStorage.setItem("checkedList",JSON.stringify(checkedList));
+    return takenWords;
+ }
 }

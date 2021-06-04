@@ -1,4 +1,5 @@
 export class Word {
     name: string;
-    checked: number
+    checked: number;
+    lastCheck?: string;
 }

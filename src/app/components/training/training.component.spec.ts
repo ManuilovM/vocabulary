@@ -247,7 +247,7 @@ describe("TrainingComponent", () => {
       component.wordName = "";
       fixture.detectChanges();
     })
-    
+
     it("При isCurrentList=false и isCheckedListfalse ДОЛЖНО быть Component.wordName = 'В хранилище нет слов...' ",
       () => {
       FakeWordServise.isCurrentList.and.returnValue(false);

@@ -122,4 +122,44 @@ describe("WordService", () => {
       })
     })
   })
+
+  describe("takeWordFromCheckedList",()=>{
+    beforeEach(()=>{
+      localStorage.clear();
+    })
+
+    it("Должна возвращать ложное значение если нет localStorage.checkedList",()=>{
+      expect(service.takeWordsFromCheckedList()).toBeFalsy();
+    })
+
+    it("Должна возвращать ложное значение если в localStorage.checkedList пустой массив",()=>{
+      localStorage.setItem("checkedList",JSON.stringify([]));
+      expect(service.takeWordsFromCheckedList()).toBeFalsy();
+    })
+
+    describe("При не пустом localStorage.checkedList",()=>{
+      let todayStr: string = new Date().toDateString();
+      let oldDateStr:string = new Date(0).toDateString();
+      beforeEach(()=>{
+        localStorage.clear();
+        localStorage.setItem("checkedList", JSON.stringify([
+          {name:"newCheckedWord", checked:1, lastCheck:todayStr},
+          {name:"newCheckedWord2", checked:1, lastCheck:todayStr},
+          {name:"oldCheckedWord", checked:1, lastCheck:oldDateStr},
+          {name:"oldCheckedWord2", checked:1, lastCheck:oldDateStr},
+          {name:"oldCheckedWord3", checked:1, lastCheck:oldDateStr},
+        ]))
+      })
+
+      it("Должна возвращать список слов провереных вчера и раннее",()=>{
+        expect(service.takeWordsFromCheckedList().length).toEqual(3);
+      })
+
+      it("Должна записывать обратно в localStorage список слов провереных сегодя",()=>{
+        service.takeWordsFromCheckedList();
+        expect( JSON.parse( localStorage.getItem("checkedList") ).length ).toEqual(2);
+      })
+
+    })
+  })
 });
