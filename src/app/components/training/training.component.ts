@@ -59,6 +59,7 @@ export class TrainingComponent implements OnInit {
   }
 
   showAlertMessage(msg: string) {
+    console.log("realSAM")
     this.alertMessage = msg;
     setTimeout(this.closeAlertMessage, 2000, this);
   }

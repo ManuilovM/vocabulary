@@ -29,6 +29,13 @@ describe("TopBarComponent", () => {
     expect(component.pageTitle).toBeTruthy();
   });
 
+  it("Должно отображаться свойство pageTitle в шаблоне", ()=>{
+    component.pageTitle = "Страница24";
+    let pageTitle = fixture.debugElement.nativeElement.querySelector(".pageTitle");
+    fixture.detectChanges();
+    expect(pageTitle.textContent.indexOf("Страница24")!==-1).toEqual(true);
+  })
+
   /* ------------------------------- arrowLinkBack ------------------------------- */
 
   describe(".arrowLinkBack, ", () => {
