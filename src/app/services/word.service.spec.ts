@@ -21,7 +21,7 @@ describe("WordService", () => {
     })
 
     it("При отсутсвии в localStorage свойства wordStorge должна возвращать true", ()=>{
-      expect(service.isUnique("cлово")).toEqual(true);
+      expect(service.isUnique("слово")).toEqual(true);
     })
 
     it("При не существовании искомого слова в localStorage.mainList должна возввращать true", ()=>{
@@ -123,7 +123,7 @@ describe("WordService", () => {
     })
   })
 
-  describe("takeWordFromCheckedList",()=>{
+  describe("takeWordsFromCheckedList",()=>{
     beforeEach(()=>{
       localStorage.clear();
     })
@@ -162,4 +162,46 @@ describe("WordService", () => {
 
     })
   })
+
+  describe("isCurrentList",()=>{
+    beforeEach(()=>{
+      localStorage.clear();
+    })
+
+    it("При localStorage.currentList = undefined должна возвращать false ",()=>{
+      expect(service.isCurrentList()).toBeFalse();
+    })
+
+    it("При localStorage.currentList = [] должна возвращать false ",()=>{
+      localStorage.setItem("currentList", JSON.stringify([]));
+      expect(service.isCurrentList()).toBeFalse();
+    })
+
+    it("При localStorage.curentList = [{name: 'name', checked: 0}]",()=>{
+      localStorage.setItem("currentList", JSON.stringify([{name: 'name', checked: 0}]));
+      expect(service.isCurrentList()).toBeTrue();
+    })
+  })
+
+  describe("isCheckedList",()=>{
+    beforeEach(()=>{
+      localStorage.clear();
+    })
+
+    it("При localStorage.checkedList = undefined должна возвращать false ",()=>{
+      expect(service.isCheckedList()).toBeFalse();
+    })
+
+    it("При localStorage.checkedList = [] должна возвращать false ",()=>{
+      localStorage.setItem("checkedList", JSON.stringify([]));
+      expect(service.isCheckedList()).toBeFalse();
+    })
+
+    it("При localStorage.checkedList = [{name: 'name', checked: 0, lastCheck: 'today'}] должна возвращать true",()=>{
+      localStorage.setItem("checkedList", JSON.stringify([{name: 'name', checked: 0, lastCheck: 'today'}]));
+      expect(service.isCheckedList()).toBeTrue();
+    })
+  })
+
+
 });

@@ -49,14 +49,14 @@ export class WordService {
   isCurrentList(): boolean {
     return (
       !!localStorage.getItem("currentList") &&
-      !!localStorage.getItem("currentList").length
+      !!JSON.parse(localStorage.getItem("currentList")).length
     );
   }
 
   isCheckedList(): boolean {
     return (
       !!localStorage.getItem("checkedList") &&
-      !!localStorage.getItem("checkedList").length
+      !!JSON.parse(localStorage.getItem("checkedList")).length
     );
   }
 
