@@ -40,6 +40,28 @@ export class WordService {
     newCurrentList.push(word);
     localStorage.setItem("currentList", JSON.stringify(newCurrentList));
   }
+  
+  addWordToCheckedList(word: Word){
+    let newCheckedList: Array<Word> = [];
+    let checkedListFromLocalStorage: string = localStorage.getItem(
+      "checkedtList"
+    );
+
+    if (checkedListFromLocalStorage) {
+      newCheckedList = JSON.parse(checkedListFromLocalStorage);
+    }
+
+    newCheckedList.push(word);
+    localStorage.setItem("checkedtList", JSON.stringify(newCheckedList));
+  }
+
+  deleteWordFromMainList(word:string){
+    let newMainList: Array<string> =  JSON.parse(localStorage.getItem(
+      "mainList"
+    ));
+    newMainList =newMainList.filter((item)=> item !== word);
+    localStorage.setItem("mainList", JSON.stringify(newMainList));
+  }
 
   takeWord(): Word {
     console.log("realTakeWord");

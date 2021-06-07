@@ -13,8 +13,11 @@ describe("TrainingComponent", () => {
     "isUnique",
     "addWordToMainList",
     "addWordToCurrentList",
+    "addWordToCheckedList",
+    "deleteWordFromMainList",
     "isCurrentListAndHasItems",
     "isCheckedListAndHasItems",
+    "takeWordFromCheckedList"
   ]);
 
   let fakeFillWordProperties;
