@@ -48,7 +48,7 @@ export class TrainingComponent implements OnInit {
         "В хранилище нет слов. Добавте слова чтобы начать тренировку";
       return;
     }
-    let word: Word = this.wordService.getWord();
+    let word: Word = this.wordService.takeWord();
     if (!word) {
       this.wordName =
         "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые";

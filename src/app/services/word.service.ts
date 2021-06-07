@@ -41,8 +41,8 @@ export class WordService {
     localStorage.setItem("currentList", JSON.stringify(newCurrentList));
   }
 
-  getWord(): Word {
-    console.log("realGetWord");
+  takeWord(): Word {
+    console.log("realTakeWord");
     let takenWords: Array<Word> =[];
     let currentList : Array<Word> =[]
 

@@ -9,7 +9,7 @@ describe("TrainingComponent", () => {
   let fixture: ComponentFixture<TrainingComponent>;
 
   const FakeWordServise = jasmine.createSpyObj("wordServise", [
-    "getWord",
+    "takeWord",
     "isUnique",
     "addWordToMainList",
     "addWordToCurrentList",
@@ -258,20 +258,20 @@ describe("TrainingComponent", () => {
       );
     });
 
-    it( "При isCurrentList=true и getWord() = underfined ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
+    it( "При isCurrentList=true и takeWord() = underfined ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
       FakeWordServise.isCurrentList.and.returnValue(true);
-      FakeWordServise.getWord.and.returnValue(undefined);
+      FakeWordServise.takeWord.and.returnValue(undefined);
       component.fillWordProperties();
       expect(component.wordName).toEqual(
         "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые"
       );
     });
 
-    it( "При isCurrentList=true и getWord() = {name: 'слово', checked: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
+    it( "При isCurrentList=true и takeWord() = {name: 'слово', checked: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
       FakeWordServise.isCurrentList.and.returnValue(true);
-      FakeWordServise.getWord.and.returnValue({name: 'слово', checked: 0});
+      FakeWordServise.takeWord.and.returnValue({name: 'слово', checked: 0});
       component.fillWordProperties();
       expect(component.wordName).toEqual(
         'слово'

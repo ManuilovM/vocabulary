@@ -203,7 +203,7 @@ describe("WordService", () => {
     })
   })
 
-  describe("getWord",()=>{
+  describe("takeWord",()=>{
     beforeEach(()=>{
       localStorage.clear();
     })
@@ -211,7 +211,7 @@ describe("WordService", () => {
     it("При localStorage.isCheckedListTakenToday = true;  isCurrentList = false Должна авернуть ложное значение",()=>{
       localStorage.setItem("isCheckedListTakenToday", JSON.stringify(true));
       spyOn(service, "isCurrentList").and.returnValue(false);
-      expect(service.getWord()).toBeFalsy();
+      expect(service.takeWord()).toBeFalsy();
     })
 
     describe("При localStorage.isCheckedListTakenToday = false; isCurrentList = false; service.TakeWordsFromCheckedList = null",()=>{
@@ -222,11 +222,11 @@ describe("WordService", () => {
       })
 
       it(" Должна вернуть ложное значение",()=>{
-        expect(service.getWord()).toBeFalsy();
+        expect(service.takeWord()).toBeFalsy();
       })
   
       it(" должна поменять localStorage.isCheckedListTakenToday с false на true;", ()=>{
-        service.getWord();
+        service.takeWord();
         expect(JSON.parse(localStorage.getItem("isCheckedListTakenToday"))).toBeTrue();
       })
     })
@@ -240,13 +240,13 @@ describe("WordService", () => {
       })
 
       it("Должна вернуть {name: 'слово', checked:0}",()=>{
-        let word:Word = service.getWord();
+        let word:Word = service.takeWord();
         let result:boolean = word.name =='слово'&&word.checked ==0;
         expect(result).toBeTrue();
       })
 
       it("localStorage.currentList.length должен быть равен 0",()=>{
-        service.getWord();
+        service.takeWord();
         expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(0);
       })
     })
@@ -260,13 +260,13 @@ describe("WordService", () => {
       })
 
       it("Должна вернуть экземпляр Word",()=>{
-        let word:Word = service.getWord();
+        let word:Word = service.takeWord();
         let result:boolean = word.checked ==0;
         expect(result).toBeTrue();
       })
 
       it("localStorage.currentList.length должен быть равен 1",()=>{
-        service.getWord();
+        service.takeWord();
         expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(1);
       })
 
@@ -282,13 +282,13 @@ describe("WordService", () => {
       })
 
       it("Должна вернуть экземпляр Word",()=>{
-        let word:Word = service.getWord();
+        let word:Word = service.takeWord();
         let result:boolean = word.checked ==0;
         expect(result).toBeTrue();
       })
 
       it("localStorage.currentList.length должен быть равен 1",()=>{
-        service.getWord();
+        service.takeWord();
         expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(1);
       })
 
@@ -301,13 +301,13 @@ describe("WordService", () => {
       })
 
       it("Должна вернуть экземпляр Word",()=>{
-        let word:Word = service.getWord();
+        let word:Word = service.takeWord();
         let result:boolean = word.checked ==0;
         expect(result).toBeTrue();
       })
 
       it("localStorage.currentList.length должен быть равен 0",()=>{
-        service.getWord();
+        service.takeWord();
         expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(0);
       })
 
