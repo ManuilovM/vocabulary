@@ -43,7 +43,22 @@ export class WordService {
 
   getWord(): Word {
     console.log("realGetWord");
-    return { name: "словечко", checked: 0 };
+    let takenWords: Array<Word> =[];
+    let currentList : Array<Word> =[]
+
+    if(!JSON.parse(localStorage.getItem("isCheckedListTakenToday"))){
+      takenWords= this.takeWordsFromCheckedList();
+      if(!takenWords) takenWords =[]; 
+      localStorage.setItem("isCheckedListTakenToday", JSON.stringify(true));
+    }
+    if(this.isCurrentList() ) currentList  = JSON.parse(localStorage.getItem("currentList"));
+    else if (!takenWords.length) return;
+
+    currentList = currentList.concat(takenWords);
+    let randomIndex:number = Math.floor(Math.random()*(currentList.length));
+    let word: Word = currentList.splice(randomIndex, 1)[0];
+    localStorage.setItem("currentList",JSON.stringify(currentList));
+    return word;
   }
 
   isCurrentList(): boolean {
@@ -60,20 +75,22 @@ export class WordService {
     );
   }
 
-  takeWordsFromCheckedList(): Array<Word>{
-    let takenWords: Array<Word>=[];
+  takeWordsFromCheckedList(): Array<Word> {
+    let takenWords: Array<Word> = [];
     let checkedList: Array<Word>;
-    if(!localStorage.getItem("checkedList")) return;
+    if (!localStorage.getItem("checkedList")) return;
     checkedList = JSON.parse(localStorage.getItem("checkedList"));
-    if(checkedList.length==0) return;
+    if (checkedList.length == 0) return;
     let todayStr: string = new Date().toDateString();
 
-    checkedList = checkedList.filter((item)=>{
+    checkedList = checkedList.filter((item) => {
       let isTodayChecked: Boolean = item.lastCheck == todayStr;
-      if(!isTodayChecked) takenWords.push(item);
+      if (!isTodayChecked) takenWords.push(item);
       return isTodayChecked;
-    })
-    localStorage.setItem("checkedList",JSON.stringify(checkedList));
+    });
+    localStorage.setItem("checkedList", JSON.stringify(checkedList));
     return takenWords;
- }
+  }
+
+
 }

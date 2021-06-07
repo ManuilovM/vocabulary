@@ -203,5 +203,117 @@ describe("WordService", () => {
     })
   })
 
+  describe("getWord",()=>{
+    beforeEach(()=>{
+      localStorage.clear();
+    })
+
+    it("При localStorage.isCheckedListTakenToday = true;  isCurrentList = false Должна авернуть ложное значение",()=>{
+      localStorage.setItem("isCheckedListTakenToday", JSON.stringify(true));
+      spyOn(service, "isCurrentList").and.returnValue(false);
+      expect(service.getWord()).toBeFalsy();
+    })
+
+    describe("При localStorage.isCheckedListTakenToday = false; isCurrentList = false; service.TakeWordsFromCheckedList = null",()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+        spyOn(service, "isCurrentList").and.returnValue(false);
+        spyOn(service,"takeWordsFromCheckedList").and.returnValue(null);
+      })
+
+      it(" Должна вернуть ложное значение",()=>{
+        expect(service.getWord()).toBeFalsy();
+      })
+  
+      it(" должна поменять localStorage.isCheckedListTakenToday с false на true;", ()=>{
+        service.getWord();
+        expect(JSON.parse(localStorage.getItem("isCheckedListTakenToday"))).toBeTrue();
+      })
+    })
+
+    describe("При localStorage.currentList =[{name: 'слово', checked:0}], service.TakeWordsFromCheckedList = null",()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+        spyOn(service, "isCurrentList").and.returnValue(true);
+        spyOn(service,"takeWordsFromCheckedList").and.returnValue(null);
+        localStorage.setItem("currentList", JSON.stringify([{name: 'слово', checked:0}]));
+      })
+
+      it("Должна вернуть {name: 'слово', checked:0}",()=>{
+        let word:Word = service.getWord();
+        let result:boolean = word.name =='слово'&&word.checked ==0;
+        expect(result).toBeTrue();
+      })
+
+      it("localStorage.currentList.length должен быть равен 0",()=>{
+        service.getWord();
+        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(0);
+      })
+    })
+   
+    describe("При localStorage.currentList =[{name: 'слово', checked:0}, {name: 'слово1', checked:0}],service.TakeWordsFromCheckedList = null",()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+        spyOn(service, "isCurrentList").and.returnValue(true);
+        spyOn(service,"takeWordsFromCheckedList").and.returnValue(null);
+        localStorage.setItem("currentList", JSON.stringify([{name: 'слово', checked:0},{name: 'слово1', checked:0}]));
+      })
+
+      it("Должна вернуть экземпляр Word",()=>{
+        let word:Word = service.getWord();
+        let result:boolean = word.checked ==0;
+        expect(result).toBeTrue();
+      })
+
+      it("localStorage.currentList.length должен быть равен 1",()=>{
+        service.getWord();
+        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(1);
+      })
+
+    })
+
+ 
+    describe("При localStorage.currentList =[{name: 'слово', checked:0}],service.TakeWordsFromCheckedList = [{name: 'слово2', checked:0}]",()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+        spyOn(service, "isCurrentList").and.returnValue(true);
+        spyOn(service,"takeWordsFromCheckedList").and.returnValue([{name: 'слово2', checked:0}]);
+        localStorage.setItem("currentList", JSON.stringify([{name: 'слово', checked:0}]));
+      })
+
+      it("Должна вернуть экземпляр Word",()=>{
+        let word:Word = service.getWord();
+        let result:boolean = word.checked ==0;
+        expect(result).toBeTrue();
+      })
+
+      it("localStorage.currentList.length должен быть равен 1",()=>{
+        service.getWord();
+        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(1);
+      })
+
+    })
+    describe("При localStorage.currentList  = falsy,service.TakeWordsFromCheckedList = [{name: 'слово2', checked:0}]",()=>{
+      beforeEach(()=>{
+        localStorage.clear();
+        spyOn(service, "isCurrentList").and.returnValue(false);
+        spyOn(service,"takeWordsFromCheckedList").and.returnValue([{name: 'слово2', checked:0}]);
+      })
+
+      it("Должна вернуть экземпляр Word",()=>{
+        let word:Word = service.getWord();
+        let result:boolean = word.checked ==0;
+        expect(result).toBeTrue();
+      })
+
+      it("localStorage.currentList.length должен быть равен 0",()=>{
+        service.getWord();
+        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(0);
+      })
+
+    })
+
+    
+  })
 
 });
