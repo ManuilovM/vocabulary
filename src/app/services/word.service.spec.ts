@@ -163,43 +163,43 @@ describe("WordService", () => {
     })
   })
 
-  describe("isCurrentList",()=>{
+  describe("isCurrentListAndHasItems",()=>{
     beforeEach(()=>{
       localStorage.clear();
     })
 
     it("При localStorage.currentList = undefined должна возвращать false ",()=>{
-      expect(service.isCurrentList()).toBeFalse();
+      expect(service.isCurrentListAndHasItems()).toBeFalse();
     })
 
     it("При localStorage.currentList = [] должна возвращать false ",()=>{
       localStorage.setItem("currentList", JSON.stringify([]));
-      expect(service.isCurrentList()).toBeFalse();
+      expect(service.isCurrentListAndHasItems()).toBeFalse();
     })
 
     it("При localStorage.curentList = [{name: 'name', checked: 0}]",()=>{
       localStorage.setItem("currentList", JSON.stringify([{name: 'name', checked: 0}]));
-      expect(service.isCurrentList()).toBeTrue();
+      expect(service.isCurrentListAndHasItems()).toBeTrue();
     })
   })
 
-  describe("isCheckedList",()=>{
+  describe("isCheckedListAndHasItems",()=>{
     beforeEach(()=>{
       localStorage.clear();
     })
 
     it("При localStorage.checkedList = undefined должна возвращать false ",()=>{
-      expect(service.isCheckedList()).toBeFalse();
+      expect(service.isCheckedListAndHasItems()).toBeFalse();
     })
 
     it("При localStorage.checkedList = [] должна возвращать false ",()=>{
       localStorage.setItem("checkedList", JSON.stringify([]));
-      expect(service.isCheckedList()).toBeFalse();
+      expect(service.isCheckedListAndHasItems()).toBeFalse();
     })
 
     it("При localStorage.checkedList = [{name: 'name', checked: 0, lastCheck: 'today'}] должна возвращать true",()=>{
       localStorage.setItem("checkedList", JSON.stringify([{name: 'name', checked: 0, lastCheck: 'today'}]));
-      expect(service.isCheckedList()).toBeTrue();
+      expect(service.isCheckedListAndHasItems()).toBeTrue();
     })
   })
 
@@ -208,16 +208,16 @@ describe("WordService", () => {
       localStorage.clear();
     })
 
-    it("При localStorage.isCheckedListTakenToday = true;  isCurrentList = false Должна авернуть ложное значение",()=>{
+    it("При localStorage.isCheckedListTakenToday = true;  isCurrentListAndHasItems = false Должна авернуть ложное значение",()=>{
       localStorage.setItem("isCheckedListTakenToday", JSON.stringify(true));
-      spyOn(service, "isCurrentList").and.returnValue(false);
+      spyOn(service, "isCurrentListAndHasItems").and.returnValue(false);
       expect(service.takeWord()).toBeFalsy();
     })
 
-    describe("При localStorage.isCheckedListTakenToday = false; isCurrentList = false; service.TakeWordsFromCheckedList = null",()=>{
+    describe("При localStorage.isCheckedListTakenToday = false; isCurrentListAndHasItems = false; service.TakeWordsFromCheckedList = null",()=>{
       beforeEach(()=>{
         localStorage.clear();
-        spyOn(service, "isCurrentList").and.returnValue(false);
+        spyOn(service, "isCurrentListAndHasItems").and.returnValue(false);
         spyOn(service,"takeWordsFromCheckedList").and.returnValue(null);
       })
 
@@ -234,7 +234,7 @@ describe("WordService", () => {
     describe("При localStorage.currentList =[{name: 'слово', checked:0}], service.TakeWordsFromCheckedList = null",()=>{
       beforeEach(()=>{
         localStorage.clear();
-        spyOn(service, "isCurrentList").and.returnValue(true);
+        spyOn(service, "isCurrentListAndHasItems").and.returnValue(true);
         spyOn(service,"takeWordsFromCheckedList").and.returnValue(null);
         localStorage.setItem("currentList", JSON.stringify([{name: 'слово', checked:0}]));
       })
@@ -254,7 +254,7 @@ describe("WordService", () => {
     describe("При localStorage.currentList =[{name: 'слово', checked:0}, {name: 'слово1', checked:0}],service.TakeWordsFromCheckedList = null",()=>{
       beforeEach(()=>{
         localStorage.clear();
-        spyOn(service, "isCurrentList").and.returnValue(true);
+        spyOn(service, "isCurrentListAndHasItems").and.returnValue(true);
         spyOn(service,"takeWordsFromCheckedList").and.returnValue(null);
         localStorage.setItem("currentList", JSON.stringify([{name: 'слово', checked:0},{name: 'слово1', checked:0}]));
       })
@@ -276,7 +276,7 @@ describe("WordService", () => {
     describe("При localStorage.currentList =[{name: 'слово', checked:0}],service.TakeWordsFromCheckedList = [{name: 'слово2', checked:0}]",()=>{
       beforeEach(()=>{
         localStorage.clear();
-        spyOn(service, "isCurrentList").and.returnValue(true);
+        spyOn(service, "isCurrentListAndHasItems").and.returnValue(true);
         spyOn(service,"takeWordsFromCheckedList").and.returnValue([{name: 'слово2', checked:0}]);
         localStorage.setItem("currentList", JSON.stringify([{name: 'слово', checked:0}]));
       })
@@ -296,7 +296,7 @@ describe("WordService", () => {
     describe("При localStorage.currentList  = falsy,service.TakeWordsFromCheckedList = [{name: 'слово2', checked:0}]",()=>{
       beforeEach(()=>{
         localStorage.clear();
-        spyOn(service, "isCurrentList").and.returnValue(false);
+        spyOn(service, "isCurrentListAndHasItems").and.returnValue(false);
         spyOn(service,"takeWordsFromCheckedList").and.returnValue([{name: 'слово2', checked:0}]);
       })
 

@@ -51,7 +51,7 @@ export class WordService {
       if(!takenWords) takenWords =[]; 
       localStorage.setItem("isCheckedListTakenToday", JSON.stringify(true));
     }
-    if(this.isCurrentList() ) currentList  = JSON.parse(localStorage.getItem("currentList"));
+    if(this.isCurrentListAndHasItems() ) currentList  = JSON.parse(localStorage.getItem("currentList"));
     else if (!takenWords.length) return;
 
     currentList = currentList.concat(takenWords);
@@ -61,14 +61,14 @@ export class WordService {
     return word;
   }
 
-  isCurrentList(): boolean {
+  isCurrentListAndHasItems(): boolean {
     return (
       !!localStorage.getItem("currentList") &&
       !!JSON.parse(localStorage.getItem("currentList")).length
     );
   }
 
-  isCheckedList(): boolean {
+  isCheckedListAndHasItems(): boolean {
     return (
       !!localStorage.getItem("checkedList") &&
       !!JSON.parse(localStorage.getItem("checkedList")).length

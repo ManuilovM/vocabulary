@@ -13,8 +13,8 @@ describe("TrainingComponent", () => {
     "isUnique",
     "addWordToMainList",
     "addWordToCurrentList",
-    "isCurrentList",
-    "isCheckedList",
+    "isCurrentListAndHasItems",
+    "isCheckedListAndHasItems",
   ]);
 
   let fakeFillWordProperties;
@@ -248,19 +248,19 @@ describe("TrainingComponent", () => {
       fixture.detectChanges();
     })
 
-    it("При isCurrentList=false и isCheckedListfalse ДОЛЖНО быть Component.wordName = 'В хранилище нет слов...' ",
+    it("При isCurrentListAndHasItems=false и isCheckedListAndHasItems = false ДОЛЖНО быть Component.wordName = 'В хранилище нет слов...' ",
       () => {
-      FakeWordServise.isCurrentList.and.returnValue(false);
-      FakeWordServise.isCheckedList.and.returnValue(false);
+      FakeWordServise.isCurrentListAndHasItems.and.returnValue(false);
+      FakeWordServise.isCheckedListAndHasItems.and.returnValue(false);
       component.fillWordProperties();
       expect(component.wordName).toEqual(
         "В хранилище нет слов. Добавте слова чтобы начать тренировку"
       );
     });
 
-    it( "При isCurrentList=true и takeWord() = underfined ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
+    it( "При isCurrentListAndHasItems=true и takeWord() = underfined ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
-      FakeWordServise.isCurrentList.and.returnValue(true);
+      FakeWordServise.isCurrentListAndHasItems.and.returnValue(true);
       FakeWordServise.takeWord.and.returnValue(undefined);
       component.fillWordProperties();
       expect(component.wordName).toEqual(
@@ -268,9 +268,9 @@ describe("TrainingComponent", () => {
       );
     });
 
-    it( "При isCurrentList=true и takeWord() = {name: 'слово', checked: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
+    it( "При isCurrentListAndHasItems=true и takeWord() = {name: 'слово', checked: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
-      FakeWordServise.isCurrentList.and.returnValue(true);
+      FakeWordServise.isCurrentListAndHasItems.and.returnValue(true);
       FakeWordServise.takeWord.and.returnValue({name: 'слово', checked: 0});
       component.fillWordProperties();
       expect(component.wordName).toEqual(

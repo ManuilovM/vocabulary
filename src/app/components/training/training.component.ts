@@ -41,8 +41,8 @@ export class TrainingComponent implements OnInit {
   fillWordProperties() {
     console.log("realFWP");
     if (
-      !this.wordService.isCurrentList() &&
-      !this.wordService.isCheckedList()
+      !this.wordService.isCurrentListAndHasItems() &&
+      !this.wordService.isCheckedListAndHasItems()
     ) {
       this.wordName =
         "В хранилище нет слов. Добавте слова чтобы начать тренировку";
