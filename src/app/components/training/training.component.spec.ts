@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
+import { Word } from "src/app/classes/word-obj";
 import { WordService } from "src/app/services/word.service";
 
 import { TrainingComponent } from "./training.component";
@@ -236,9 +237,6 @@ describe("TrainingComponent", () => {
         expect(FakeWordServise.addWordToCurrentList).toHaveBeenCalled();
       });
 
-      it("Должна вызываться функция component.fillWordProperties", () => {    
-        expect(fakeFillWordProperties).toHaveBeenCalled();
-      });
     });
   });
 
@@ -282,13 +280,35 @@ describe("TrainingComponent", () => {
     });
   });
 
+  /* --------------------------- clearWordProperties -------------------------- */
+
+  describe("clearWordProperies",()=>{
+    beforeEach(()=>{
+      component.wordInstance ={name: "ckjdj", checked: 0};
+      component.wordName ="ckjdj";
+      fixture.detectChanges();
+    })
+
+    it("Должна удалить значение свойства component.wordInstance",()=>{
+      component.clearWordProperties();
+      expect(component.wordInstance).toBeFalsy();
+    })
+
+    it("Должна удалить значение свойства component.wordName",()=>{
+      component.clearWordProperties();
+      expect(component.wordName).toBeFalsy();
+    })
+  })
+
   /* ---------------------------- onSayYes; onSayNo --------------------------- */
 
   describe("onSayYes",()=>{
     beforeEach(()=>{
+      localStorage.clear();
       fakeFillWordProperties.calls.reset();
       FakeWordServise.deleteWordFromMainList.calls.reset();
       FakeWordServise.addWordToCheckedList.calls.reset();
+      spyOn(component, "clearWordProperties").and.callFake(()=>{});
       component.wordInstance = {name:"слово", checked: 0}
     })
 
@@ -306,6 +326,7 @@ describe("TrainingComponent", () => {
 
     it("Должна увеличивать на один войство component.word.checked",()=>{
       component.onSayYes();
+
       expect(component.wordInstance.checked).toEqual(1);
     })
 
@@ -330,6 +351,13 @@ describe("TrainingComponent", () => {
     beforeEach(()=>{
       fakeFillWordProperties.calls.reset();
       FakeWordServise.addWordToCurrentList.calls.reset();
+    })
+
+    it("При нажатии .no должна вызываться функция onSayNo",()=>{
+      spyOn(component, "onSayNo");
+      let button = fixture.debugElement.nativeElement.querySelector(".no");
+      button.click();
+      expect(component.onSayNo).toHaveBeenCalled();
     })
 
     it("Должна вызываться функция component.fillWordProperties",()=>{

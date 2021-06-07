@@ -44,7 +44,7 @@ export class WordService {
   addWordToCheckedList(word: Word){
     let newCheckedList: Array<Word> = [];
     let checkedListFromLocalStorage: string = localStorage.getItem(
-      "checkedtList"
+      "checkedList"
     );
 
     if (checkedListFromLocalStorage) {
@@ -52,7 +52,7 @@ export class WordService {
     }
 
     newCheckedList.push(word);
-    localStorage.setItem("checkedtList", JSON.stringify(newCheckedList));
+    localStorage.setItem("checkedList", JSON.stringify(newCheckedList));
   }
 
   deleteWordFromMainList(word:string){
@@ -64,7 +64,6 @@ export class WordService {
   }
 
   takeWord(): Word {
-    console.log("realTakeWord");
     let takenWords: Array<Word> =[];
     let currentList : Array<Word> =[]
 

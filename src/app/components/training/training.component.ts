@@ -39,7 +39,7 @@ export class TrainingComponent implements OnInit {
   }
 
   fillWordProperties() {
-    console.log("realFWP");
+    if(this.wordInstance)this.wordService.addWordToCurrentList(this.wordInstance);
     if (
       !this.wordService.isCurrentListAndHasItems() &&
       !this.wordService.isCheckedListAndHasItems()
@@ -58,8 +58,12 @@ export class TrainingComponent implements OnInit {
     this.wordInstance = word;
   }
 
+  clearWordProperties(){
+    this.wordInstance = null;
+    this.wordName ="";
+  }
+
   showAlertMessage(msg: string) {
-    console.log("realSAM")
     this.alertMessage = msg;
     setTimeout(this.closeAlertMessage, 2000, this);
   }
@@ -76,11 +80,13 @@ export class TrainingComponent implements OnInit {
     if(this.wordInstance.checked == 5)  this.wordService.deleteWordFromMainList(this.wordName);
     else this.wordService.addWordToCheckedList(this.wordInstance);
     
+    this.clearWordProperties();
     this.fillWordProperties();
   }
 
   onSayNo(){
     this.wordService.addWordToCurrentList(this.wordInstance);
+    this.clearWordProperties();
     this.fillWordProperties();
   }
 

@@ -133,27 +133,27 @@ describe("WordService", () => {
 
   describe("addWordToCheckedList(word)", () => {
     describe("При отсутсвии localStorage.checkedList до вызова функции", () => {
-      let checkedtList: Array<Word>;
+      let checkedList: Array<Word>;
 
       beforeEach(() => {
         localStorage.clear();
         service.addWordToCheckedList({ name: "слово", checked: 0 });
-        checkedtList = JSON.parse(localStorage.getItem("checkedtList"));
+        checkedList = JSON.parse(localStorage.getItem("checkedList"));
       });
 
-      it("Должна добывить слово из аргумента в localStorage.checkedtList", () => {
-        let result: boolean = checkedtList.some((item) => {
+      it("Должна добывить слово из аргумента в localStorage.checkedList", () => {
+        let result: boolean = checkedList.some((item) => {
           return item.name === "слово" && item.checked === 0;
         });
         expect(result).toEqual(true);
       });
 
       it("Количество елементов должно увеличится на один", () => {
-        expect(checkedtList.length).toEqual(1);
+        expect(checkedList.length).toEqual(1);
       });
     });
 
-    describe("При существовании некого списка в localStorage.checkedtList до вызова функции", () => {
+    describe("При существовании некого списка в localStorage.checkedList до вызова функции", () => {
       let checkedList: Array<Word>;
 
       beforeEach(() => {
@@ -163,12 +163,12 @@ describe("WordService", () => {
           { name: "список", checked: 0 },
           { name: "слов", checked: 0 },
         ]);
-        localStorage.setItem("checkedtList", checkedListInJSON);
+        localStorage.setItem("checkedList", checkedListInJSON);
         service.addWordToCheckedList({ name: "слово", checked: 0 });
-        checkedList = JSON.parse(localStorage.getItem("checkedtList"));
+        checkedList = JSON.parse(localStorage.getItem("checkedList"));
       });
 
-      it("Должна добывить слово из аргумента в localStorage.checkedtList", () => {
+      it("Должна добывить слово из аргумента в localStorage.checkedList", () => {
         let result: boolean = checkedList.some((item) => {
           return item.name === "слово" && item.checked === 0;
         });
