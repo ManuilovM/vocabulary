@@ -10,6 +10,7 @@ import { WordService } from "src/app/services/word.service";
   styleUrls: ["./training.component.css"],
 })
 export class TrainingComponent implements OnInit {
+  wordInstanceName = window.location.pathname + "WordInstance";
   alertMessage: string = "";
 
   wordName: string;
@@ -49,12 +50,13 @@ export class TrainingComponent implements OnInit {
   fillWordProperties() {
     if (
       !this.wordInstance &&
-      localStorage.getItem("wordInstance") &&
-      JSON.parse(localStorage.getItem("wordInstance"))
+      localStorage.getItem(this.wordInstanceName) &&
+      JSON.parse(localStorage.getItem(this.wordInstanceName))
     )
-      this.wordInstance = JSON.parse(localStorage.getItem("wordInstance"));
-    if (this.wordInstance)
-      this.wordService.addWordToCurrentList(this.wordInstance);
+      this.wordInstance = JSON.parse(localStorage.getItem(this.wordInstanceName));
+
+    if (this.wordInstance) this.wordService.addWordToCurrentList(this.wordInstance);
+
     if (
       !this.wordService.isCurrentListAndHasItems() &&
       !this.wordService.isCheckedListAndHasItems()
@@ -63,21 +65,24 @@ export class TrainingComponent implements OnInit {
         "В хранилище нет слов. Добавьте слова чтобы начать тренировку";
       return;
     }
+
     let word: Word = this.wordService.takeWord();
+
     if (!word) {
       this.wordName =
         "Вы повторили все слова на сегодня. Подождите день чтобы повторить эти слова снова или добавьте новые";
       return;
     }
+
     this.wordName = word.name;
     this.wordInstance = word;
-    localStorage.setItem("wordInstance", JSON.stringify(this.wordInstance));
+    localStorage.setItem(this.wordInstanceName, JSON.stringify(this.wordInstance));
   }
 
   clearWordProperties() {
     this.wordInstance = null;
     this.wordName = "";
-    localStorage.removeItem("wordInstance");
+    localStorage.removeItem(this.wordInstanceName);
   }
 
   showAlertMessage(msg: string) {
