@@ -241,13 +241,23 @@ describe("TrainingComponent", () => {
     });
   });
 
-  /* ---------------------------- fillPropertyWord ---------------------------- */
+  /* ---------------------------- fillWordProperty ---------------------------- */
 
   describe("fillWordProperty", () => {
     beforeEach(()=>{
       fakeFillWordProperties.and.callThrough();
       component.wordName = "";
       fixture.detectChanges();
+    })
+
+    it("При localStorage.wordInstance = {name: 'foo', chackedTimes:0}; component.wordInstance=null; localStorage.currentList=null; localStorage.checkedList=null должна вернуть тот же instance",()=>{
+      localStorage.clear();
+      localStorage.setItem("wordInstance", JSON.stringify({name: 'foo', chackedTimes:0}));
+      component.wordInstance =null;
+      component.fillWordProperties();
+      fixture.detectChanges();
+      let result: boolean= component.wordInstance.name == "foo"; 
+      expect(result).toBeTrue();
     })
 
     it("При isCurrentListAndHasItems=false и isCheckedListAndHasItems = false ДОЛЖНО быть Component.wordName = 'В хранилище нет слов...' ",
@@ -287,6 +297,7 @@ describe("TrainingComponent", () => {
     beforeEach(()=>{
       component.wordInstance ={name: "ckjdj", checkedTimes: 0};
       component.wordName ="ckjdj";
+      localStorage.setItem("wordInstance", JSON.stringify({name: "ckjdj", chackedTimes:0}));
       fixture.detectChanges();
     })
 
@@ -298,6 +309,11 @@ describe("TrainingComponent", () => {
     it("Должна удалить значение свойства component.wordName",()=>{
       component.clearWordProperties();
       expect(component.wordName).toBeFalsy();
+    })
+
+    it("Должна удалить значение из localStorage.wordInstance",()=>{
+      component.clearWordProperties();
+      expect(localStorage.getItem("wordInstance")).toBeFalsy();
     })
   })
 

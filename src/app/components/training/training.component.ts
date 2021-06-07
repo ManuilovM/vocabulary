@@ -21,8 +21,8 @@ export class TrainingComponent implements OnInit {
   constructor(public wordService: WordService) {}
 
   ngOnInit(): void {
-    this.fillWordProperties();
     this.wordService.fillListNameProperties(window.location.pathname);
+    this.fillWordProperties();
   }
 
   onAddWordButtonClick() {
@@ -47,7 +47,14 @@ export class TrainingComponent implements OnInit {
   }
 
   fillWordProperties() {
-    if(this.wordInstance)this.wordService.addWordToCurrentList(this.wordInstance);
+    if (
+      !this.wordInstance &&
+      localStorage.getItem("wordInstance") &&
+      JSON.parse(localStorage.getItem("wordInstance"))
+    )
+      this.wordInstance = JSON.parse(localStorage.getItem("wordInstance"));
+    if (this.wordInstance)
+      this.wordService.addWordToCurrentList(this.wordInstance);
     if (
       !this.wordService.isCurrentListAndHasItems() &&
       !this.wordService.isCheckedListAndHasItems()
@@ -64,11 +71,13 @@ export class TrainingComponent implements OnInit {
     }
     this.wordName = word.name;
     this.wordInstance = word;
+    localStorage.setItem("wordInstance", JSON.stringify(this.wordInstance));
   }
 
-  clearWordProperties(){
+  clearWordProperties() {
     this.wordInstance = null;
-    this.wordName ="";
+    this.wordName = "";
+    localStorage.removeItem("wordInstance");
   }
 
   showAlertMessage(msg: string) {
@@ -80,23 +89,22 @@ export class TrainingComponent implements OnInit {
     component.alertMessage = "";
   }
 
-  onSayYes(){
-    let todayStr:string = new Date().toDateString();
+  onSayYes() {
+    let todayStr: string = new Date().toDateString();
     this.wordInstance.lastCheck = todayStr;
     this.wordInstance.checkedTimes++;
-    
-    if(this.wordInstance.checkedTimes == 5)  this.wordService.deleteWordFromMainList(this.wordName);
+
+    if (this.wordInstance.checkedTimes == 5)
+      this.wordService.deleteWordFromMainList(this.wordName);
     else this.wordService.addWordToCheckedList(this.wordInstance);
-    
+
     this.clearWordProperties();
     this.fillWordProperties();
   }
 
-  onSayNo(){
+  onSayNo() {
     this.wordService.addWordToCurrentList(this.wordInstance);
     this.clearWordProperties();
     this.fillWordProperties();
   }
-
-
 }
