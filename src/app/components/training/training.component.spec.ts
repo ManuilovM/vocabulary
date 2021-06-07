@@ -18,7 +18,8 @@ describe("TrainingComponent", () => {
     "deleteWordFromMainList",
     "isCurrentListAndHasItems",
     "isCheckedListAndHasItems",
-    "takeWordFromCheckedList"
+    "takeWordFromCheckedList",
+    "fillListNameProperties"
   ]);
 
   let fakeFillWordProperties;

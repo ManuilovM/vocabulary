@@ -6,9 +6,12 @@ import { WordService } from "./word.service";
 describe("WordService", () => {
   let service: WordService;
 
+  
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(WordService);
+    service.fillListNameProperties("EnRu");
   });
 
   it("should be created", () => {
@@ -26,13 +29,13 @@ describe("WordService", () => {
 
     it("При не существовании искомого слова в localStorage.mainList должна возввращать true", () => {
       let mainListInJSON = JSON.stringify(["слово"]);
-      localStorage.setItem("mainList", mainListInJSON);
+      localStorage.setItem(service.mainListName, mainListInJSON);
       expect(service.isUnique("Уникальное слово")).toEqual(true);
     });
 
     it("При существовании искомого слова в localStorage.mainList должна возввращать false", () => {
       let mainListInJSON = JSON.stringify(["слово"]);
-      localStorage.setItem("mainList", mainListInJSON);
+      localStorage.setItem(service.mainListName, mainListInJSON);
       expect(service.isUnique("слово")).toEqual(false);
     });
   });
@@ -44,7 +47,7 @@ describe("WordService", () => {
       beforeEach(() => {
         localStorage.clear();
         service.addWordToMainList("слово");
-        mainList = JSON.parse(localStorage.getItem("mainList"));
+        mainList = JSON.parse(localStorage.getItem(service.mainListName));
       });
 
       it("Должна добывить слово из аргумента в localStorage.mainList", () => {
@@ -66,9 +69,9 @@ describe("WordService", () => {
           "список",
           "слов",
         ]);
-        localStorage.setItem("mainList", mainListInJSON);
+        localStorage.setItem(service.mainListName, mainListInJSON);
         service.addWordToMainList("слово");
-        mainList = JSON.parse(localStorage.getItem("mainList"));
+        mainList = JSON.parse(localStorage.getItem(service.mainListName));
       });
 
       it("Должна добывить слово из аргумента в localStorage.mainList", () => {
@@ -88,7 +91,7 @@ describe("WordService", () => {
       beforeEach(() => {
         localStorage.clear();
         service.addWordToCurrentList({ name: "слово", checked: 0 });
-        currentList = JSON.parse(localStorage.getItem("currentList"));
+        currentList = JSON.parse(localStorage.getItem(service.currentListName));
       });
 
       it("Должна добывить слово из аргумента в localStorage.currentList", () => {
@@ -113,9 +116,9 @@ describe("WordService", () => {
           { name: "список", checked: 0 },
           { name: "слов", checked: 0 },
         ]);
-        localStorage.setItem("currentList", currentListInJSON);
+        localStorage.setItem(service.currentListName, currentListInJSON);
         service.addWordToCurrentList({ name: "слово", checked: 0 });
-        currentList = JSON.parse(localStorage.getItem("currentList"));
+        currentList = JSON.parse(localStorage.getItem(service.currentListName));
       });
 
       it("Должна добывить слово из аргумента в localStorage.currentList", () => {
@@ -138,7 +141,7 @@ describe("WordService", () => {
       beforeEach(() => {
         localStorage.clear();
         service.addWordToCheckedList({ name: "слово", checked: 0 });
-        checkedList = JSON.parse(localStorage.getItem("checkedList"));
+        checkedList = JSON.parse(localStorage.getItem(service.checkedListName));
       });
 
       it("Должна добывить слово из аргумента в localStorage.checkedList", () => {
@@ -163,9 +166,9 @@ describe("WordService", () => {
           { name: "список", checked: 0 },
           { name: "слов", checked: 0 },
         ]);
-        localStorage.setItem("checkedList", checkedListInJSON);
+        localStorage.setItem(service.checkedListName, checkedListInJSON);
         service.addWordToCheckedList({ name: "слово", checked: 0 });
-        checkedList = JSON.parse(localStorage.getItem("checkedList"));
+        checkedList = JSON.parse(localStorage.getItem(service.checkedListName));
       });
 
       it("Должна добывить слово из аргумента в localStorage.checkedList", () => {
@@ -185,13 +188,13 @@ describe("WordService", () => {
     describe("При localStorage.mainList.legth =1", () => {
       beforeEach(() => {
         localStorage.clear();
-        localStorage.setItem("mainList", JSON.stringify(["word"]));
+        localStorage.setItem(service.mainListName, JSON.stringify(["word"]));
       });
 
       it("Должна удалять указанное слово из localStorage.mainList", () => {
         service.deleteWordFromMainList("word");
               expect(
-          JSON.parse(localStorage.getItem("mainList")).indexOf("word") == -1
+          JSON.parse(localStorage.getItem(service.mainListName)).indexOf("word") == -1
         ).toBeTrue();
       });
     });
@@ -199,13 +202,13 @@ describe("WordService", () => {
     describe("При localStorage.mainList.legth =2", () => {
       beforeEach(() => {
         localStorage.clear();
-        localStorage.setItem("mainList", JSON.stringify(["word", "secondWord"]));
+        localStorage.setItem(service.mainListName, JSON.stringify(["word", "secondWord"]));
       });
 
       it("Должна удалять указанное слово из localStorage.mainList", () => {
         service.deleteWordFromMainList("word");
         expect(
-          JSON.parse(localStorage.getItem("mainList")).indexOf("word") == -1
+          JSON.parse(localStorage.getItem(service.mainListName)).indexOf("word") == -1
         ).toBeTrue();
       });
     });
@@ -221,7 +224,7 @@ describe("WordService", () => {
     });
 
     it("Должна возвращать ложное значение если в localStorage.checkedList пустой массив", () => {
-      localStorage.setItem("checkedList", JSON.stringify([]));
+      localStorage.setItem(service.checkedListName, JSON.stringify([]));
       expect(service.takeWordsFromCheckedList()).toBeFalsy();
     });
 
@@ -231,7 +234,7 @@ describe("WordService", () => {
       beforeEach(() => {
         localStorage.clear();
         localStorage.setItem(
-          "checkedList",
+          service.checkedListName,
           JSON.stringify([
             { name: "newCheckedWord", checked: 1, lastCheck: todayStr },
             { name: "newCheckedWord2", checked: 1, lastCheck: todayStr },
@@ -248,7 +251,7 @@ describe("WordService", () => {
 
       it("Должна записывать обратно в localStorage список слов провереных сегодя", () => {
         service.takeWordsFromCheckedList();
-        expect(JSON.parse(localStorage.getItem("checkedList")).length).toEqual(
+        expect(JSON.parse(localStorage.getItem(service.checkedListName)).length).toEqual(
           2
         );
       });
@@ -265,13 +268,13 @@ describe("WordService", () => {
     });
 
     it("При localStorage.currentList = [] должна возвращать false ", () => {
-      localStorage.setItem("currentList", JSON.stringify([]));
+      localStorage.setItem(service.currentListName, JSON.stringify([]));
       expect(service.isCurrentListAndHasItems()).toBeFalse();
     });
 
     it("При localStorage.curentList = [{name: 'name', checked: 0}]", () => {
       localStorage.setItem(
-        "currentList",
+        service.currentListName,
         JSON.stringify([{ name: "name", checked: 0 }])
       );
       expect(service.isCurrentListAndHasItems()).toBeTrue();
@@ -288,13 +291,13 @@ describe("WordService", () => {
     });
 
     it("При localStorage.checkedList = [] должна возвращать false ", () => {
-      localStorage.setItem("checkedList", JSON.stringify([]));
+      localStorage.setItem(service.checkedListName, JSON.stringify([]));
       expect(service.isCheckedListAndHasItems()).toBeFalse();
     });
 
     it("При localStorage.checkedList = [{name: 'name', checked: 0, lastCheck: 'today'}] должна возвращать true", () => {
       localStorage.setItem(
-        "checkedList",
+        service.checkedListName,
         JSON.stringify([{ name: "name", checked: 0, lastCheck: "today" }])
       );
       expect(service.isCheckedListAndHasItems()).toBeTrue();
@@ -307,7 +310,7 @@ describe("WordService", () => {
     });
 
     it("При localStorage.isCheckedListTakenToday = true;  isCurrentListAndHasItems = false Должна авернуть ложное значение", () => {
-      localStorage.setItem("isCheckedListTakenToday", JSON.stringify(true));
+      localStorage.setItem(service.isCheckedListTakenTodayName, JSON.stringify(true));
       spyOn(service, "isCurrentListAndHasItems").and.returnValue(false);
       expect(service.takeWord()).toBeFalsy();
     });
@@ -326,7 +329,7 @@ describe("WordService", () => {
       it(" должна поменять localStorage.isCheckedListTakenToday с false на true;", () => {
         service.takeWord();
         expect(
-          JSON.parse(localStorage.getItem("isCheckedListTakenToday"))
+          JSON.parse(localStorage.getItem(service.isCheckedListTakenTodayName))
         ).toBeTrue();
       });
     });
@@ -337,7 +340,7 @@ describe("WordService", () => {
         spyOn(service, "isCurrentListAndHasItems").and.returnValue(true);
         spyOn(service, "takeWordsFromCheckedList").and.returnValue(null);
         localStorage.setItem(
-          "currentList",
+          service.currentListName,
           JSON.stringify([{ name: "слово", checked: 0 }])
         );
       });
@@ -350,7 +353,7 @@ describe("WordService", () => {
 
       it("localStorage.currentList.length должен быть равен 0", () => {
         service.takeWord();
-        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(
+        expect(JSON.parse(localStorage.getItem(service.currentListName)).length).toEqual(
           0
         );
       });
@@ -362,7 +365,7 @@ describe("WordService", () => {
         spyOn(service, "isCurrentListAndHasItems").and.returnValue(true);
         spyOn(service, "takeWordsFromCheckedList").and.returnValue(null);
         localStorage.setItem(
-          "currentList",
+          service.currentListName,
           JSON.stringify([
             { name: "слово", checked: 0 },
             { name: "слово1", checked: 0 },
@@ -378,7 +381,7 @@ describe("WordService", () => {
 
       it("localStorage.currentList.length должен быть равен 1", () => {
         service.takeWord();
-        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(
+        expect(JSON.parse(localStorage.getItem(service.currentListName)).length).toEqual(
           1
         );
       });
@@ -392,7 +395,7 @@ describe("WordService", () => {
           { name: "слово2", checked: 0 },
         ]);
         localStorage.setItem(
-          "currentList",
+          service.currentListName,
           JSON.stringify([{ name: "слово", checked: 0 }])
         );
       });
@@ -405,7 +408,7 @@ describe("WordService", () => {
 
       it("localStorage.currentList.length должен быть равен 1", () => {
         service.takeWord();
-        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(
+        expect(JSON.parse(localStorage.getItem(service.currentListName)).length).toEqual(
           1
         );
       });
@@ -427,10 +430,32 @@ describe("WordService", () => {
 
       it("localStorage.currentList.length должен быть равен 0", () => {
         service.takeWord();
-        expect(JSON.parse(localStorage.getItem("currentList")).length).toEqual(
+        expect(JSON.parse(localStorage.getItem(service.currentListName)).length).toEqual(
           0
         );
       });
     });
   });
+
+  describe("fillListNameProperties",()=>{
+    beforeEach(()=>{
+      service.fillListNameProperties("/KUKU");
+    })
+
+    it("currentListName долженбыть равен '/KUKUCurrentList'",()=>{
+      expect(service.currentListName).toEqual('/KUKUCurrentList')
+    })
+
+    it("maintListName долженбыть равен '/KUKUMainList'",()=>{
+      expect(service.mainListName).toEqual('/KUKUMainList')
+    })
+
+    it("checkedListName долженбыть равен '/KUKUCheckedList'",()=>{
+      expect(service.checkedListName).toEqual('/KUKUCheckedList')
+    })
+
+    it("isCheckedLisTakenListName долженбыть равен '/KUKUCheckedList'",()=>{
+      expect(service.checkedListName).toEqual('/KUKUCheckedList')
+    })
+  })
 });

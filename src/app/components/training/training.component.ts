@@ -18,6 +18,13 @@ export class TrainingComponent implements OnInit {
 
   wordFormControl: FormControl = new FormControl("");
 
+  constructor(public wordService: WordService) {}
+
+  ngOnInit(): void {
+    this.fillWordProperties();
+    this.wordService.fillListNameProperties(window.location.pathname);
+  }
+
   onAddWordButtonClick() {
     if (!this.wordFormControl.value) {
       this.showAlertMessage("Введите слово!");
@@ -35,6 +42,7 @@ export class TrainingComponent implements OnInit {
     this.wordService.addWordToMainList(wordStr);
     this.wordService.addWordToCurrentList(wordObj);
     this.fillWordProperties();
+    this.wordFormControl.reset();
     return;
   }
 
@@ -90,9 +98,5 @@ export class TrainingComponent implements OnInit {
     this.fillWordProperties();
   }
 
-  constructor(public wordService: WordService) {}
 
-  ngOnInit(): void {
-    this.fillWordProperties();
-  }
 }

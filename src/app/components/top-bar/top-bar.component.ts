@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { WordService } from "src/app/services/word.service";
 
 @Component({
   selector: "app-top-bar",
@@ -21,5 +22,7 @@ export class TopBarComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 }
