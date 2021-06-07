@@ -95,6 +95,7 @@ export class TrainingComponent implements OnInit {
   }
 
   onSayYes() {
+    if(!this.wordInstance) return
     let todayStr: string = new Date().toDateString();
     this.wordInstance.lastCheck = todayStr;
     this.wordInstance.checkedTimes++;
@@ -108,6 +109,7 @@ export class TrainingComponent implements OnInit {
   }
 
   onSayNo() {
+    if(!this.wordInstance) return
     this.wordService.addWordToCurrentList(this.wordInstance);
     this.clearWordProperties();
     this.fillWordProperties();

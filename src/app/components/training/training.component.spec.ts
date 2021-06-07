@@ -329,6 +329,14 @@ describe("TrainingComponent", () => {
       FakeWordServise.addWordToCheckedList.calls.reset();
       spyOn(component, "clearWordProperties").and.callFake(()=>{});
       component.wordInstance = {name:"слово", checkedTimes: 0}
+      fixture.detectChanges();
+    })
+
+    it("При component.wordInstance = null не должна вызваться функция component.fillWordProperties",()=>{
+      component.wordInstance = null;
+      fixture.detectChanges();
+      component.onSayYes();
+      expect(fakeFillWordProperties).not.toHaveBeenCalled();
     })
 
     it("При нажатии .yes должна вызываться функция onSayYes",()=>{
@@ -368,8 +376,19 @@ describe("TrainingComponent", () => {
 
   describe("onSayNo",()=>{
     beforeEach(()=>{
+      localStorage.clear();
       fakeFillWordProperties.calls.reset();
       FakeWordServise.addWordToCurrentList.calls.reset();
+      spyOn(component, "clearWordProperties").and.callFake(()=>{});
+      component.wordInstance = {name:"слово", checkedTimes: 0}
+      fixture.detectChanges();
+    })
+
+    it("при component.wordInstance = null не должна вызываться component.fillWordProperties",()=>{
+      component.wordInstance =null;
+      fixture.detectChanges();
+      component.onSayNo();
+      expect(fakeFillWordProperties).not.toHaveBeenCalled();
     })
 
     it("При нажатии .no должна вызываться функция onSayNo",()=>{
@@ -384,9 +403,5 @@ describe("TrainingComponent", () => {
       expect(fakeFillWordProperties).toHaveBeenCalled();
     })
 
-    it("Должна вызываться функция component.fillWordProperties",()=>{
-      component.onSayNo();
-      expect(FakeWordServise.addWordToCurrentList).toHaveBeenCalled();
-    })
   })
 });
