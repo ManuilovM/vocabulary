@@ -67,17 +67,14 @@ export class TrainingComponent implements OnInit {
   closeAlertMessage(component) {
     component.alertMessage = "";
   }
-/*
+
   onSayYes(){
     let todayStr:string = new Date().toDateString();
     this.wordInstance.lastCheck = todayStr;
     this.wordInstance.checked++;
-
     
-    if(this.wordInstance.checked !== 5)  {
-      this.wordService.add
-      this.del
-    }
+    if(this.wordInstance.checked == 5)  this.wordService.deleteWordFromMainList(this.wordName);
+    else this.wordService.addWordToCheckedList(this.wordInstance);
     
     this.fillWordProperties();
   }
@@ -86,7 +83,7 @@ export class TrainingComponent implements OnInit {
     this.wordService.addWordToCurrentList(this.wordInstance);
     this.fillWordProperties();
   }
-*/
+
   constructor(public wordService: WordService) {}
 
   ngOnInit(): void {

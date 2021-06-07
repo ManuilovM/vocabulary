@@ -281,4 +281,65 @@ describe("TrainingComponent", () => {
       );
     });
   });
+
+  /* ---------------------------- onSayYes; onSayNo --------------------------- */
+
+  describe("onSayYes",()=>{
+    beforeEach(()=>{
+      fakeFillWordProperties.calls.reset();
+      FakeWordServise.deleteWordFromMainList.calls.reset();
+      FakeWordServise.addWordToCheckedList.calls.reset();
+      component.wordInstance = {name:"слово", checked: 0}
+    })
+
+    it("При нажатии .yes должна вызываться функция onSayYes",()=>{
+      spyOn(component, "onSayYes");
+      let button = fixture.debugElement.nativeElement.querySelector(".yes");
+      button.click();
+      expect(component.onSayYes).toHaveBeenCalled();
+    })
+
+    it("Должна устанавливать в свойстве component.word.lastCheck сегоднешнюю дату",()=>{
+      component.onSayYes();
+      expect(component.wordInstance.lastCheck).toEqual(new Date().toDateString());
+    })
+
+    it("Должна увеличивать на один войство component.word.checked",()=>{
+      component.onSayYes();
+      expect(component.wordInstance.checked).toEqual(1);
+    })
+
+    it("При пятом чеке должна вызываться функция wordService.deleteWordFromMainList",()=>{
+      component.wordInstance = {name:"слово", checked: 4}
+      component.onSayYes();
+      expect(FakeWordServise.deleteWordFromMainList).toHaveBeenCalled();
+    })
+
+    it("Если менее чем пятый чек должна вызываться функция wordService.addWordToCheckedList",()=>{
+      component.onSayYes();
+      expect(FakeWordServise.addWordToCheckedList).toHaveBeenCalled();
+    })
+
+    it("Должна вызываться функция component.fillWordProperties",()=>{
+      component.onSayYes();
+      expect(fakeFillWordProperties).toHaveBeenCalled();
+    })
+  })
+
+  describe("onSayNo",()=>{
+    beforeEach(()=>{
+      fakeFillWordProperties.calls.reset();
+      FakeWordServise.addWordToCurrentList.calls.reset();
+    })
+
+    it("Должна вызываться функция component.fillWordProperties",()=>{
+      component.onSayNo();
+      expect(fakeFillWordProperties).toHaveBeenCalled();
+    })
+
+    it("Должна вызываться функция component.fillWordProperties",()=>{
+      component.onSayNo();
+      expect(FakeWordServise.addWordToCurrentList).toHaveBeenCalled();
+    })
+  })
 });
