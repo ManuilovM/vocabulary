@@ -60,13 +60,13 @@ export class TrainingComponent implements OnInit {
       !this.wordService.isCheckedListAndHasItems()
     ) {
       this.wordName =
-        "В хранилище нет слов. Добавте слова чтобы начать тренировку";
+        "В хранилище нет слов. Добавьте слова чтобы начать тренировку";
       return;
     }
     let word: Word = this.wordService.takeWord();
     if (!word) {
       this.wordName =
-        "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые";
+        "Вы повторили все слова на сегодня. Подождите день чтобы повторить эти слова снова или добавьте новые";
       return;
     }
     this.wordName = word.name;

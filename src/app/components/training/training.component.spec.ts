@@ -266,7 +266,7 @@ describe("TrainingComponent", () => {
       FakeWordServise.isCheckedListAndHasItems.and.returnValue(false);
       component.fillWordProperties();
       expect(component.wordName).toEqual(
-        "В хранилище нет слов. Добавте слова чтобы начать тренировку"
+        "В хранилище нет слов. Добавьте слова чтобы начать тренировку"
       );
     });
 
@@ -276,7 +276,7 @@ describe("TrainingComponent", () => {
       FakeWordServise.takeWord.and.returnValue(undefined);
       component.fillWordProperties();
       expect(component.wordName).toEqual(
-        "Вы повторили все слова. Подождите день чтобы повторить эти слова снова или добавте новые"
+        "Вы повторили все слова на сегодня. Подождите день чтобы повторить эти слова снова или добавьте новые"
       );
     });
 
