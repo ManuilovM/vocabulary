@@ -32,7 +32,7 @@ export class TrainingComponent implements OnInit {
     }
 
     let wordStr: string = this.wordFormControl.value;
-    let wordObj: Word = { name: wordStr, checked: 0 };
+    let wordObj: Word = { name: wordStr, checkedTimes: 0 };
 
     if (!this.wordService.isUnique(wordStr)) {
       this.showAlertMessage("Это слово уже добавлено!");
@@ -83,9 +83,9 @@ export class TrainingComponent implements OnInit {
   onSayYes(){
     let todayStr:string = new Date().toDateString();
     this.wordInstance.lastCheck = todayStr;
-    this.wordInstance.checked++;
+    this.wordInstance.checkedTimes++;
     
-    if(this.wordInstance.checked == 5)  this.wordService.deleteWordFromMainList(this.wordName);
+    if(this.wordInstance.checkedTimes == 5)  this.wordService.deleteWordFromMainList(this.wordName);
     else this.wordService.addWordToCheckedList(this.wordInstance);
     
     this.clearWordProperties();

@@ -1,5 +1,5 @@
 export class Word {
     name: string;
-    checked: number;
+    checkedTimes: number;
     lastCheck?: string;
 }

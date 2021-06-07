@@ -88,7 +88,7 @@ describe("TrainingComponent", () => {
     });
 
     it("Должно быть свойство wordInstance",()=>{
-      component.wordInstance= {name: "word1", checked:0}
+      component.wordInstance= {name: "word1", checkedTimes:0}
       expect(component.wordInstance).toBeTruthy();
     })
   });
@@ -270,10 +270,10 @@ describe("TrainingComponent", () => {
       );
     });
 
-    it( "При isCurrentListAndHasItems=true и takeWord() = {name: 'слово', checked: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
+    it( "При isCurrentListAndHasItems=true и takeWord() = {name: 'слово', checkedTimes: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
       FakeWordServise.isCurrentListAndHasItems.and.returnValue(true);
-      FakeWordServise.takeWord.and.returnValue({name: 'слово', checked: 0});
+      FakeWordServise.takeWord.and.returnValue({name: 'слово', checkedTimes: 0});
       component.fillWordProperties();
       expect(component.wordName).toEqual(
         'слово'
@@ -285,7 +285,7 @@ describe("TrainingComponent", () => {
 
   describe("clearWordProperies",()=>{
     beforeEach(()=>{
-      component.wordInstance ={name: "ckjdj", checked: 0};
+      component.wordInstance ={name: "ckjdj", checkedTimes: 0};
       component.wordName ="ckjdj";
       fixture.detectChanges();
     })
@@ -310,7 +310,7 @@ describe("TrainingComponent", () => {
       FakeWordServise.deleteWordFromMainList.calls.reset();
       FakeWordServise.addWordToCheckedList.calls.reset();
       spyOn(component, "clearWordProperties").and.callFake(()=>{});
-      component.wordInstance = {name:"слово", checked: 0}
+      component.wordInstance = {name:"слово", checkedTimes: 0}
     })
 
     it("При нажатии .yes должна вызываться функция onSayYes",()=>{
@@ -325,14 +325,14 @@ describe("TrainingComponent", () => {
       expect(component.wordInstance.lastCheck).toEqual(new Date().toDateString());
     })
 
-    it("Должна увеличивать на один войство component.word.checked",()=>{
+    it("Должна увеличивать на один войство component.word.checkedTimes",()=>{
       component.onSayYes();
 
-      expect(component.wordInstance.checked).toEqual(1);
+      expect(component.wordInstance.checkedTimes).toEqual(1);
     })
 
     it("При пятом чеке должна вызываться функция wordService.deleteWordFromMainList",()=>{
-      component.wordInstance = {name:"слово", checked: 4}
+      component.wordInstance = {name:"слово", checkedTimes: 4}
       component.onSayYes();
       expect(FakeWordServise.deleteWordFromMainList).toHaveBeenCalled();
     })
