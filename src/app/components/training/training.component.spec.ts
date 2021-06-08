@@ -53,6 +53,12 @@ describe("TrainingComponent", () => {
     it("should create", () => {
       expect(component).toBeTruthy();
     });
+    
+    it("Должено быть свойство wordInstanceName", () => {
+      component.wordInstanceName= "слово";
+      expect(component.wordInstanceName).toBeTruthy();
+    });
+
 
     it("Должено быть свойство wordName", () => {
       component.wordName = "слово";
