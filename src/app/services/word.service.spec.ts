@@ -305,17 +305,18 @@ describe("WordService", () => {
   });
 
   describe("takeWord", () => {
+    let todayStr:string = new Date().toDateString();;
     beforeEach(() => {
       localStorage.clear();
     });
 
-    it("При localStorage.isCheckedListTakenToday = true;  isCurrentListAndHasItems = false Должна авернуть ложное значение", () => {
-      localStorage.setItem(service.isCheckedListTakenTodayName, JSON.stringify(true));
+    it("При localStorage.lastTakeFromChekedList = today;  isCurrentListAndHasItems = false Должна авернуть ложное значение", () => {
+      localStorage.setItem(service.lastTakeFromCheckedListName, todayStr);
       spyOn(service, "isCurrentListAndHasItems").and.returnValue(false);
       expect(service.takeWord()).toBeFalsy();
     });
 
-    describe("При localStorage.isCheckedListTakenToday = false; isCurrentListAndHasItems = false; service.TakeWordsFromCheckedList = null", () => {
+    describe("При localStorage.lastTakeFromChekedList = null; isCurrentListAndHasItems = false; service.TakeWordsFromCheckedList = null", () => {
       beforeEach(() => {
         localStorage.clear();
         spyOn(service, "isCurrentListAndHasItems").and.returnValue(false);
@@ -326,11 +327,11 @@ describe("WordService", () => {
         expect(service.takeWord()).toBeFalsy();
       });
 
-      it(" должна поменять localStorage.isCheckedListTakenToday с false на true;", () => {
+      it(" должна поменять localStorage.lastTakeFromChekedList с null на todayStr;", () => {
         service.takeWord();
         expect(
-          JSON.parse(localStorage.getItem(service.isCheckedListTakenTodayName))
-        ).toBeTrue();
+          localStorage.getItem(service.lastTakeFromCheckedListName)
+        ).toEqual(todayStr);
       });
     });
 
@@ -343,6 +344,7 @@ describe("WordService", () => {
           service.currentListName,
           JSON.stringify([{ name: "слово", checkedTimes: 0 }])
         );
+      
       });
 
       it("Должна вернуть {name: 'слово', checkedTimes:0}", () => {
@@ -454,8 +456,8 @@ describe("WordService", () => {
       expect(service.checkedListName).toEqual('/KUKUCheckedList')
     })
 
-    it("isCheckedLisTakenListName долженбыть равен '/KUKUCheckedList'",()=>{
-      expect(service.checkedListName).toEqual('/KUKUCheckedList')
+    it(" lastTakeFromCheckedListName долженбыть равен '/KUKULastTakeFromCheckedList'",()=>{
+      expect(service.lastTakeFromCheckedListName).toEqual('/KUKULastTakeFromCheckedList')
     })
   })
 });

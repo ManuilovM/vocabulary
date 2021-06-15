@@ -8,7 +8,8 @@ export class WordService {
   currentListName:string;
   mainListName:string;
   checkedListName:string;
-  isCheckedListTakenTodayName:string;
+  lastTakeFromCheckedListName:string;
+  isCheckedListTakenToday: boolean;
   constructor() {}
 
   isUnique(word: string): boolean {
@@ -70,11 +71,12 @@ export class WordService {
   takeWord(): Word {
     let takenWords: Array<Word> =[];
     let currentList : Array<Word> =[]
-
-    if(!JSON.parse(localStorage.getItem(this.isCheckedListTakenTodayName))){
+    let todayStr: string = new Date().toDateString();
+    this.isCheckedListTakenToday = (localStorage.getItem(this.lastTakeFromCheckedListName)==todayStr);
+    if(!this.isCheckedListTakenToday){
       takenWords= this.takeWordsFromCheckedList();
       if(!takenWords) takenWords =[]; 
-      localStorage.setItem(this.isCheckedListTakenTodayName, JSON.stringify(true));
+      localStorage.setItem(this.lastTakeFromCheckedListName, todayStr);
     }
     if(this.isCurrentListAndHasItems() ) currentList  = JSON.parse(localStorage.getItem(this.currentListName));
     else if (!takenWords.length) return;
@@ -121,7 +123,7 @@ export class WordService {
     this.currentListName = pathname +"CurrentList";
     this.mainListName =pathname + "MainList";
     this.checkedListName =pathname +"CheckedList";
-    this.isCheckedListTakenTodayName=pathname +"IsCheckedListTakenToday";
+    this.lastTakeFromCheckedListName=pathname +"LastTakeFromCheckedList";
   }
 
 

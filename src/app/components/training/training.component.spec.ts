@@ -56,21 +56,23 @@ describe("TrainingComponent", () => {
     
     it("Должено быть свойство wordInstanceName", () => {
       component.wordInstanceName= "слово";
+      fixture.detectChanges();
       expect(component.wordInstanceName).toBeTruthy();
     });
 
 
     it("Должено быть свойство wordName", () => {
       component.wordName = "слово";
+      fixture.detectChanges();
       expect(component.wordName).toBeTruthy();
     });
 
     it("Должно отображатьсяь свойство wordName в шаблоне",()=>{
       component.wordName = "Словечко";
-      fixture.detectChanges();
       const wordName = fixture.debugElement.nativeElement.querySelector(
         ".word"
       ); 
+      fixture.detectChanges();
       expect(wordName.textContent).toEqual("Словечко");
     })
 
@@ -84,17 +86,18 @@ describe("TrainingComponent", () => {
       ); 
       component.wordFormControl.setValue("foo");
       fixture.detectChanges();
-      console.dir(component.wordFormControl);
       expect(input.value).toEqual("foo");
     })
 
     it("Должно быть свойство alertMessage", () => {
       component.alertMessage = "Сообщение";
+      fixture.detectChanges();
       expect(component.alertMessage).toBeTruthy();
     });
 
     it("Должно быть свойство wordInstance",()=>{
       component.wordInstance= {name: "word1", checkedTimes:0}
+      fixture.detectChanges();
       expect(component.wordInstance).toBeTruthy();
     })
   });
@@ -105,14 +108,15 @@ describe("TrainingComponent", () => {
       it("Должна менять свойство alertMessage на msg из аргумента", () => {
         fakeShowAlertMessage.and.callThrough();
         component.alertMessage = "";
-        fixture.detectChanges();
         component.showAlertMessage("Сообщение1");
+        fixture.detectChanges();
         expect(component.alertMessage).toEqual("Сообщение1");
       });
     });
   
     describe("closeAlertMessage()", () => {
       it("Должна присваевать свойству alertMessage пустую строку", () => {
+        fixture.detectChanges();
         component.alertMessage = "Сообщение2";
         fixture.detectChanges();
         component.closeAlertMessage(component);
@@ -155,6 +159,7 @@ describe("TrainingComponent", () => {
         ".addWordButton"
       );
       button.click();
+      fixture.detectChanges();
       expect(component.onAddWordButtonClick).toHaveBeenCalled();
     });
 
@@ -257,7 +262,8 @@ describe("TrainingComponent", () => {
       fixture.detectChanges();
     })
 
-    it("При localStorage.wordInstance = {name: 'foo', chackedTimes:0}; component.wordInstance=null; localStorage.currentList=null; localStorage.checkedList=null должна вернуть тот же instance",()=>{
+    it("При localStorage.wordInstance = {name: 'foo', chackedTimes:0}; component.wordInstance=null; localStorage.currentList=null; localStorage.checkedList=null должна вернуть тот же instance в свойство component.wordInstance",()=>{
+      fixture.detectChanges();
       localStorage.clear();
       localStorage.setItem(component.wordInstanceName, JSON.stringify({name: 'foo', chackedTimes:0}));
       component.wordInstance =null;
@@ -269,9 +275,11 @@ describe("TrainingComponent", () => {
 
     it("При isCurrentListAndHasItems=false и isCheckedListAndHasItems = false ДОЛЖНО быть Component.wordName = 'В хранилище нет слов...' ",
       () => {
+        fixture.detectChanges();
       FakeWordServise.isCurrentListAndHasItems.and.returnValue(false);
       FakeWordServise.isCheckedListAndHasItems.and.returnValue(false);
       component.fillWordProperties();
+      fixture.detectChanges();
       expect(component.wordName).toEqual(
         "В хранилище нет слов. Добавьте слова чтобы начать тренировку"
       );
@@ -279,9 +287,11 @@ describe("TrainingComponent", () => {
 
     it( "При isCurrentListAndHasItems=true и takeWord() = underfined ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
+        fixture.detectChanges();
       FakeWordServise.isCurrentListAndHasItems.and.returnValue(true);
       FakeWordServise.takeWord.and.returnValue(undefined);
       component.fillWordProperties();
+      fixture.detectChanges();
       expect(component.wordName).toEqual(
         "Вы повторили все слова на сегодня. Подождите день чтобы повторить эти слова снова или добавьте новые"
       );
@@ -289,9 +299,11 @@ describe("TrainingComponent", () => {
 
     it( "При isCurrentListAndHasItems=true и takeWord() = {name: 'слово', checkedTimes: 0} ДОЛЖНО быть Component.wordName = 'Вы повторили все слова...' ", 
       () => {
+        fixture.detectChanges();
       FakeWordServise.isCurrentListAndHasItems.and.returnValue(true);
       FakeWordServise.takeWord.and.returnValue({name: 'слово', checkedTimes: 0});
       component.fillWordProperties();
+      fixture.detectChanges();
       expect(component.wordName).toEqual(
         'слово'
       );
@@ -307,20 +319,18 @@ describe("TrainingComponent", () => {
       component.wordName ="ckjdj";
       fixture.detectChanges();
       localStorage.setItem(component.wordInstanceName, JSON.stringify({name: "ckjdj", chackedTimes:0}));
+      component.clearWordProperties();
     })
 
     it("Должна удалить значение свойства component.wordInstance",()=>{
-      component.clearWordProperties();
       expect(component.wordInstance).toBeFalsy();
     })
 
     it("Должна удалить значение свойства component.wordName",()=>{
-      component.clearWordProperties();
       expect(component.wordName).toBeFalsy();
     })
 
     it("Должна удалить значение из localStorage.wordInstance",()=>{
-      component.clearWordProperties();
       expect(localStorage.getItem(component.wordInstanceName)).toBeFalsy();
     })
   })
@@ -349,33 +359,38 @@ describe("TrainingComponent", () => {
       spyOn(component, "onSayYes");
       let button = fixture.debugElement.nativeElement.querySelector(".yes");
       button.click();
+      fixture.detectChanges();
       expect(component.onSayYes).toHaveBeenCalled();
     })
 
     it("Должна устанавливать в свойстве component.word.lastCheck сегоднешнюю дату",()=>{
       component.onSayYes();
+      fixture.detectChanges();
       expect(component.wordInstance.lastCheck).toEqual(new Date().toDateString());
     })
 
     it("Должна увеличивать на один войство component.word.checkedTimes",()=>{
       component.onSayYes();
-
+      fixture.detectChanges();
       expect(component.wordInstance.checkedTimes).toEqual(1);
     })
 
     it("При пятом чеке должна вызываться функция wordService.deleteWordFromMainList",()=>{
       component.wordInstance = {name:"слово", checkedTimes: 4}
       component.onSayYes();
+      fixture.detectChanges();
       expect(FakeWordServise.deleteWordFromMainList).toHaveBeenCalled();
     })
 
     it("Если менее чем пятый чек должна вызываться функция wordService.addWordToCheckedList",()=>{
       component.onSayYes();
+      fixture.detectChanges();
       expect(FakeWordServise.addWordToCheckedList).toHaveBeenCalled();
     })
 
     it("Должна вызываться функция component.fillWordProperties",()=>{
       component.onSayYes();
+      fixture.detectChanges();
       expect(fakeFillWordProperties).toHaveBeenCalled();
     })
   })
@@ -401,11 +416,13 @@ describe("TrainingComponent", () => {
       spyOn(component, "onSayNo");
       let button = fixture.debugElement.nativeElement.querySelector(".no");
       button.click();
+      fixture.detectChanges();
       expect(component.onSayNo).toHaveBeenCalled();
     })
 
     it("Должна вызываться функция component.fillWordProperties",()=>{
       component.onSayNo();
+      fixture.detectChanges();
       expect(fakeFillWordProperties).toHaveBeenCalled();
     })
 
